@@ -84,6 +84,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6901003958949647653}
     m_Modifications:
+    - target: {fileID: 4515474883986547480, guid: 308b6c1554a136e48859d352cf590760,
+        type: 3}
+      propertyPath: DASH_MOD
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515474883986547480, guid: 308b6c1554a136e48859d352cf590760,
+        type: 3}
+      propertyPath: DASH_MAX_TIME
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4515474883986547481, guid: 308b6c1554a136e48859d352cf590760,
         type: 3}
       propertyPath: m_Name

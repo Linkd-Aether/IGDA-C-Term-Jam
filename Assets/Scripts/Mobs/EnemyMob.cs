@@ -112,12 +112,4 @@ public class EnemyMob : Mob
         }
     }
     #endregion
-
-    private void OnDrawGizmos() {
-        foreach (PlayerManager playerManager in GameManager.playerManagers) {
-            Transform player = playerManager.playerMob.transform;
-            Vector3 rayDirection = (player.position - transform.position).normalized;
-            Gizmos.DrawRay(transform.position, maxVisionDist * rayDirection);
-        }
-    }
 }

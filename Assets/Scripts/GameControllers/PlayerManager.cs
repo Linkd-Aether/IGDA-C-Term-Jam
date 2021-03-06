@@ -11,13 +11,17 @@ public class PlayerManager : MonoBehaviour
     public Vector3 spawnPosition = Vector3.zero;
     private bool playerMobSpawned = true;
 
-    private void Start() {
+    private void Awake() {
         Resources.Load("Prefabs/Mobs/PlayerMob");
 
         playerMob = transform.GetComponentInChildren<PlayerMob>();
         if (playerMob == null) playerMob = SpawnPlayerMob(spawnPosition);
 
         GameManager.AddPlayer(this);
+    }
+
+    private void Start() {
+
     }
 
     void Update() {
@@ -39,7 +43,6 @@ public class PlayerManager : MonoBehaviour
         private void OnMovement(InputValue value) {
             if (playerMobSpawned) {
                 Vector2 input = value.Get<Vector2>();
-                Debug.Log($"OnMovementCalled {input}");
                 playerMob.SetMoveInput(input);
             }
         }
@@ -54,7 +57,7 @@ public class PlayerManager : MonoBehaviour
         // X, Y, Left Trigger, Right Mouse, or Shift (Button)
         private void OnDash(InputValue value) {
             if (playerMobSpawned) {
-
+                playerMob.SetDash();
             }
         }
 
