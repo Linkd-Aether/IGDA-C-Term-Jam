@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class PlayerMob : Mob
 {
-    // Start is called before the first frame update
-    void Start()
+    
+
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private void FixedUpdate()
+    {
+        HandleInput();
+    }
+
+    // Will be overhauled if controller support is implemented !!!
+    private void HandleInput() {
+        // Movement Controls
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        InputToMovement(input);
+
+        // Shooting Controls !!!
+    }
+
+    private void InputToMovement(Vector2 input) {
+        Vector2 force = input * speed * Time.fixedDeltaTime;
+        rb.AddForce(force);
     }
 }

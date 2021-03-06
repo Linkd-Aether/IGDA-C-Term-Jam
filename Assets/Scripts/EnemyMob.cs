@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-[RequireComponent(typeof(Seeker)), RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Seeker))]
 public class EnemyMob : Mob
-{
-    private enum ENEMY_STATES { Patrol, Chase, Flee, Fight };
-
-    public Transform target; // testing
+{   
+    // Pathfinding variables
     private Seeker seeker;
-    private Rigidbody2D rb;
-
-    public float speed = 400f;
-    public float nextWaypointDistance = 2f;
-
     private Path path;
+    public Transform target; // testing
+    
     private int currentWaypoint = 0;
     private bool reachEndofPath = false;
+    public float nextWaypointDistance = 2f;
+
+    private enum ENEMY_STATES { Patrol, Chase, Flee, Fight };
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         seeker = GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0f, 0.5f);
         seeker.StartPath(rb.position, target.position, OnPathComplete);

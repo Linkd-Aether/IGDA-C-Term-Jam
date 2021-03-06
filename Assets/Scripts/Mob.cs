@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Mob : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected Rigidbody2D rb;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    protected float speed = 400f;
+
+
+    protected virtual void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+
     }
 }
