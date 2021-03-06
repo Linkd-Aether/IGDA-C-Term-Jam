@@ -9,6 +9,8 @@ public class DynCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.playerMob.transform.position + new Vector3(0,0,-10);
+        if (player.spawnedAndAlive) {
+            transform.position = player.playerMob.transform.position + new Vector3(0,0,-10);
+        }
     }
 }

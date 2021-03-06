@@ -69,6 +69,12 @@ public class EnemyMob : Mob
         }
     }
 
+    protected override void MobDeath(Mob byDeath) {
+        base.MobDeath(byDeath);
+
+        transform.parent.GetComponentInChildren<EnemyManager>().DeathEnemyMob();
+    }
+
     #region Pathfinding
     // -> Combat State
     private void ToCombat(Transform player) {

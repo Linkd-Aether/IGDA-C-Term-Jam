@@ -15,7 +15,7 @@ abstract public class Mob : MonoBehaviour
     protected const float BULLET_SPEED = 50f;
 
     // Variables
-    protected bool isAlive = true;
+    public bool isAlive = true;
     protected float speed = 400f;
     protected int health = MAX_HEALTH;
     protected Vector2 aimDir = Vector2.right;
@@ -32,6 +32,10 @@ abstract public class Mob : MonoBehaviour
         bulletPrefab = (GameObject) Resources.Load("Prefabs/Projectiles/Bullet");
 
         rb = GetComponent<Rigidbody2D>();
+        LoadComponents();
+    }
+
+    public void LoadComponents() {
         foreach (Transform child in transform) {
             if (child.tag == "GFX") {
                 spriteRenderer = child.GetComponent<SpriteRenderer>();
@@ -82,10 +86,21 @@ abstract public class Mob : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         Destroy(this.gameObject);
+        yield return null;
     }
 
     protected Quaternion AimDirToAngle() {
         float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
         return Quaternion.Euler(0, 0, aimAngle);
+    }
+
+    public void SetColor(Color color) {
+        spriteRenderer.color = color;
+    }
+
+    public void SetAlpha(float alpha) {
+        Color color = spriteRenderer.color;
+        color.a = alpha;
+        spriteRenderer.color = color;
     }
 }
