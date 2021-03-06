@@ -20,7 +20,7 @@ public class PlayerMob : Mob
     private bool dash = false;
     private float dashTime = 0f;
     private float dashCooldown = 0f;
-    private Vector2 aimInput = Vector2.zero;
+    private Vector2 aimInput = Vector2.right;
     private float aimAngle = 0f;
 
     private Transform playerAim;

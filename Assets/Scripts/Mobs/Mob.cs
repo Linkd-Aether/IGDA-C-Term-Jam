@@ -20,18 +20,7 @@ public class Mob : MonoBehaviour
         health = maxHealth;
     }
 
-    private void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag == "Projectile") {
-            Bullet bullet = collider.GetComponent<Bullet>();
-            if (bullet.shooter != this) {
-                Debug.Log($"Hit between {this.name} and a bullet!"); // testing
-                LoseHealth(bullet.shooter);
-                bullet.Hit();
-            }
-        }
-    }
-
-    private void LoseHealth(Mob shooter) {
+    public void LoseHealth(Mob shooter) {
         // flash sprite with damage !!!
         health--;
         if (health <= 0) {
