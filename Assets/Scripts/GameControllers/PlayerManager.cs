@@ -11,13 +11,19 @@ public class PlayerManager : MonoBehaviour
     // Variables
     public Vector3 spawnPosition = Vector3.zero;
     public bool spawnedAndAlive = true;
-
+    public int score;
+    public int streak;
+    
     // Components & References
     public PlayerMob playerMob { get; private set; }
+    public GameObject playerCam;
 
 
     private void Awake() {
         playerMobPrefab = (GameObject) Resources.Load("Prefabs/Mobs/PlayerMob");
+
+        score = 0;
+        streak = 0;
 
         playerMob = transform.GetComponentInChildren<PlayerMob>();
         if (playerMob == null) playerMob = SpawnPlayerMob(spawnPosition);

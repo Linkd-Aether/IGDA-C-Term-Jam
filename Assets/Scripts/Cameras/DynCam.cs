@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DynCam : MonoBehaviour
 {
-    public GameObject player;
+    public PlayerManager player;
 
     // Update is called once per frame
     void Update()
     {
-        this.gameObject.transform.position = player.transform.position;
+        transform.position = player.playerMob.transform.position + new Vector3(0,0,-10);
     }
 }
