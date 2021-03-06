@@ -6,21 +6,25 @@ using Pathfinding;
 [RequireComponent(typeof(Seeker))]
 public class EnemyMob : Mob
 {   
-    public float maxVisionDist = 12f;
-    public float maxChaseDist = 20f;
+    // Constants
+    private enum State { Patrol, Combat };
+
+    const float SHOT_COOLDOWN_OFFSET = 2f;
+    const float MAX_VISION_DIST = 12f;
+    const float MAX_CHASE_DIST = 20f;
     
-    // Pathfinding variables
+    // Variables
+    private int currentWaypoint = 0;
+    public float nextWaypointDistance = 2f;
+
+    private State state = State.Patrol;
+
+    // Components & References
     private Seeker seeker;
     private Path path;
 
     private EnemyPath patrolPath;
     private Transform target; 
-    
-    private int currentWaypoint = 0;
-    public float nextWaypointDistance = 2f;
-
-    private enum State { Patrol, Combat };
-    private State state = State.Patrol;
 
 
     protected override void Start()
@@ -33,27 +37,34 @@ public class EnemyMob : Mob
     }
 
     private void FixedUpdate() {
-        if (state == State.Combat) {
-            if ((target.position - transform.position).sqrMagnitude > maxChaseDist * maxChaseDist){
-                ToPatrol();
-            }
-        }
-        
-        if (path != null) {
-            if (currentWaypoint >= path.vectorPath.Count) {
-                if (state == State.Patrol) {
-                    PatrolNextTarget();
+        if (isAlive) {
+            if (state == State.Combat) {
+                if ((target.position - transform.position).sqrMagnitude > MAX_CHASE_DIST * MAX_CHASE_DIST){
+                    ToPatrol();
                 }
-                return;
+                if (shoot && shotCooldown <= 0) {
+                    SpawnProjectile();
+                    shotCooldown = SHOT_COOLDOWN + SHOT_COOLDOWN_OFFSET * Random.Range(0.5f, 1.5f);
+                }
+                shotCooldown -= Time.fixedDeltaTime;
             }
+            
+            if (path != null) {
+                if (currentWaypoint >= path.vectorPath.Count) {
+                    if (state == State.Patrol) {
+                        PatrolNextTarget();
+                    }
+                    return;
+                }
 
-            Vector2 dir = ((Vector2) path.vectorPath[currentWaypoint] - rb.position).normalized;
-            Vector2 force = dir * speed * Time.deltaTime;
-            rb.AddForce(force);
+                Vector2 dir = ((Vector2) path.vectorPath[currentWaypoint] - rb.position).normalized;
+                Vector2 force = dir * speed * Time.deltaTime;
+                rb.AddForce(force);
 
-            float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-            if (distance < nextWaypointDistance) {
-                currentWaypoint++;
+                float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+                if (distance < nextWaypointDistance) {
+                    currentWaypoint++;
+                }
             }
         }
     }
@@ -64,6 +75,8 @@ public class EnemyMob : Mob
         CancelInvoke();
         state = State.Combat;
         target = player;
+        shotCooldown = 0f;
+        InvokeRepeating("TargetSearch", .2f, .1f);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 
@@ -74,11 +87,11 @@ public class EnemyMob : Mob
     }
 
     // -> Patrol State
-    private void ToPatrol() {
+    public void ToPatrol() {
         CancelInvoke();
         state = State.Patrol;
         PatrolNextTarget();
-        InvokeRepeating("PlayerSearch", 0f, 0.5f);
+        InvokeRepeating("PlayersSearch", 0f, 0.5f);
     }
 
     // Update the path in case the object has moved in Combat State
@@ -96,28 +109,37 @@ public class EnemyMob : Mob
         }
     }
 
-    // Search for players while in Patrol State
-    private void PlayerSearch() {
+    // Search for all players while in Patrol State
+    private void PlayersSearch() {
         foreach (PlayerManager playerManager in GameManager.playerManagers) {
-            Transform player = playerManager.playerMob.transform;
-            Vector2 rayDirection = player.position - transform.position;
-
-            if (rayDirection.sqrMagnitude < maxVisionDist * maxVisionDist) {
-                RaycastHit2D hit2D = Physics2D.Raycast(transform.position, rayDirection);
-                if (hit2D && hit2D.collider.gameObject.tag == "Player") {
-                    ToCombat(player);
-                    return;
-                }
+            if (playerManager.spawnedAndAlive) {
+                Transform player = playerManager.playerMob.transform;
+                if (PlayerSearch(player)) ToCombat(player);
             }
         }
     }
-    #endregion
 
-    private void OnDrawGizmos() {
-        foreach (PlayerManager playerManager in GameManager.playerManagers) {
-            Transform player = playerManager.playerMob.transform;
-            Vector3 rayDirection = (player.position - transform.position).normalized;
-            Gizmos.DrawRay(transform.position, maxVisionDist * rayDirection);
+    // Search for target (used to keep track of player in combat)
+    private void TargetSearch() {
+        if (PlayerSearch(target)) {
+            // Player target is visible and within range
+            shoot = true;
+        } else {
+            // Player target is not visible or out of range
+            shoot = false;
         }
     }
+
+    // Search for target player
+    private bool PlayerSearch(Transform player) {
+        Vector2 rayDirection = player.position - transform.position;
+
+        if (rayDirection.sqrMagnitude < MAX_VISION_DIST * MAX_VISION_DIST) {
+            aimDir = rayDirection.normalized;
+            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, rayDirection);
+            return (hit2D && hit2D.collider.gameObject.tag == "Player");
+        }
+        return false;
+    }
+    #endregion
 }
