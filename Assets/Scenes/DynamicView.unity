@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2041665237}
   - component: {fileID: 2041665236}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: CameraController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,8 +154,7 @@ MonoBehaviour:
     type: 3}
   dynCamPrefab: {fileID: 107075792077681845, guid: e19c9c26c19c98d4d8fe298f12f4ea75,
     type: 3}
-  players:
-  - {fileID: 0}
+  players: []
 --- !u!4 &2041665237
 Transform:
   m_ObjectHideFlags: 0
