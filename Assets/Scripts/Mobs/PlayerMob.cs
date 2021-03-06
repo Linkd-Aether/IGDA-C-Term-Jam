@@ -7,11 +7,13 @@ public class PlayerMob : Mob
     private static GameObject bulletPrefab;
 
     // Constants
-    const float SHOT_COOLDOWN = 1.5f;
+    const float SHOT_COOLDOWN = .8f;
     const float DASH_MOD = 4f;
+    const float DASH_BULLET_MOD = 1.4f;
     const float DASH_MAX_TIME = .2f;
     const float DASH_COOLDOWN = .6f;
     const float DRAW_AIM_DISTANCE = .15f;
+    const float RECOIL = 100f;
 
     // Movement & Combat Based Variables
     private Vector2 moveInput = Vector2.zero;
@@ -67,11 +69,17 @@ public class PlayerMob : Mob
 
     private void SpawnProjectile() {
         Vector2 spawnPos = (Vector2) transform.position + aimInput;
+        float modifier = dash ? DASH_BULLET_MOD : 1;
 
         GameObject bulletObj = Instantiate(bulletPrefab, spawnPos, Quaternion.Euler(0, 0, aimAngle));
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.direction = aimInput;
         bullet.shooter = this;
+        bullet.speed *= modifier;
+
+        rb.AddForce(-aimInput * RECOIL * modifier);
+        // play bullet SE with pitch based on dash !!!
+        dash = false;
     }
 
     #region Handle Control Changes
