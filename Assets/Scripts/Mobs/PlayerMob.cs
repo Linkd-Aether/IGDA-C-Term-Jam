@@ -4,34 +4,25 @@ using UnityEngine;
 
 public class PlayerMob : Mob
 {
-    
+    private Vector2 moveInput = Vector2.zero;
 
     protected override void Start()
     {
         base.Start();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-
-    }
-
-    private void FixedUpdate()
-    {
-        HandleInput();
-    }
-
-    // Will be overhauled if controller support is implemented !!!
-    private void HandleInput() {
-        // Movement Controls
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        InputToMovement(input);
-
-        // Shooting Controls !!!
-    }
-
-    private void InputToMovement(Vector2 input) {
-        Vector2 force = input * speed * Time.fixedDeltaTime;
+        // Movement
+        Vector2 force = moveInput * speed * Time.fixedDeltaTime;
         rb.AddForce(force);
     }
+
+    #region Handle Control Changes
+        public void SetMoveInput(Vector2 input) {
+            moveInput = input;
+        }
+
+
+    #endregion
 }
