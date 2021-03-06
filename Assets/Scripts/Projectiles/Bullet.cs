@@ -7,15 +7,15 @@ public class Bullet : MonoBehaviour
 {
     // Constants
     const float LIFETIME = 1f;
-    const float DEFAULT_SPEED = 60f;
 
-    private Rigidbody2D rb;
+    // Variables
     public Mob shooter;
     public Vector2 direction;
-    
-    public float speed = DEFAULT_SPEED;
-
+    public float speed;
     private float lifetime = LIFETIME;
+
+    // Components
+    private Rigidbody2D rb;
 
 
     void Start() {

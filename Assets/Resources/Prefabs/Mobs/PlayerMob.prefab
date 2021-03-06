@@ -165,12 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68cea6d182b29f4096997fc8784ce2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
-  maxHealth: 3
-  SHOT_COOLDOWN: 1.5
-  DASH_MOD: 4
-  DASH_MAX_TIME: 0.6
-  DASH_COOLDOWN: 1
 --- !u!1 &4515474885046968387
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +177,7 @@ GameObject:
   - component: {fileID: 4515474885046968385}
   m_Layer: 10
   m_Name: PlayerGFX
-  m_TagString: Untagged
+  m_TagString: GFX
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
