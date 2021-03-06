@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static List<PlayerManager> playerManagers { get; private set; }
+    static public List<PlayerManager> playerManagers { get; private set; }
 
     private void Start() {
         playerManagers = new List<PlayerManager>();
+    }
+
+    static public void AddPlayer(PlayerManager player) {
+        playerManagers.Add(player);
     }
 }

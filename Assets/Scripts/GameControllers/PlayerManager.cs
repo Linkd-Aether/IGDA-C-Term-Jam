@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
 
         playerMob = transform.GetComponentInChildren<PlayerMob>();
         if (playerMob == null) playerMob = SpawnPlayerMob(spawnPosition);
+
+        GameManager.AddPlayer(this);
     }
 
     void Update() {

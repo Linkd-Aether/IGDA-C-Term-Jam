@@ -98,26 +98,26 @@ public class EnemyMob : Mob
 
     // Search for players while in Patrol State
     private void PlayerSearch() {
-        // foreach (PlayerManager playerManager in GameManager.playerManagers) {
-        //     Transform player = playerManager.playerMob.transform;
-        //     Vector2 rayDirection = player.position - transform.position;
+        foreach (PlayerManager playerManager in GameManager.playerManagers) {
+            Transform player = playerManager.playerMob.transform;
+            Vector2 rayDirection = player.position - transform.position;
 
-        //     if (rayDirection.sqrMagnitude < maxVisionDist * maxVisionDist) {
-        //         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, rayDirection);
-        //         if (hit2D && hit2D.collider.gameObject.tag == "Player") {
-        //             ToCombat(player);
-        //             return;
-        //         }
-        //     }
-        // }
+            if (rayDirection.sqrMagnitude < maxVisionDist * maxVisionDist) {
+                RaycastHit2D hit2D = Physics2D.Raycast(transform.position, rayDirection);
+                if (hit2D && hit2D.collider.gameObject.tag == "Player") {
+                    ToCombat(player);
+                    return;
+                }
+            }
+        }
     }
     #endregion
 
     private void OnDrawGizmos() {
-        // foreach (PlayerManager playerManager in GameManager.playerManagers) {
-        //     Transform player = playerManager.playerMob.transform;
-        //     Vector3 rayDirection = (player.position - transform.position).normalized;
-        //     Gizmos.DrawRay(transform.position, maxVisionDist * rayDirection);
-        // }
+        foreach (PlayerManager playerManager in GameManager.playerManagers) {
+            Transform player = playerManager.playerMob.transform;
+            Vector3 rayDirection = (player.position - transform.position).normalized;
+            Gizmos.DrawRay(transform.position, maxVisionDist * rayDirection);
+        }
     }
 }
