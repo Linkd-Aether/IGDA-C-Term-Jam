@@ -9,10 +9,16 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerMob playerMob { get; private set; }
     public Vector3 spawnPosition = Vector3.zero;
+    public GameObject playerCam;
     private bool playerMobSpawned = true;
+    public int score;
+    public int streak;
 
     private void Start() {
         Resources.Load("Prefabs/Mobs/PlayerMob");
+
+        score = 0;
+        streak = 0;
 
         playerMob = transform.GetComponentInChildren<PlayerMob>();
         if (playerMob == null) playerMob = SpawnPlayerMob(spawnPosition);
