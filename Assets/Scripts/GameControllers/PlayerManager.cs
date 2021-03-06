@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     private bool playerMobSpawned = true;
 
     private void Awake() {
-        Resources.Load("Prefabs/Mobs/PlayerMob");
+        playerMobPrefab = (GameObject) Resources.Load("Prefabs/Mobs/PlayerMob");
 
         playerMob = transform.GetComponentInChildren<PlayerMob>();
         if (playerMob == null) playerMob = SpawnPlayerMob(spawnPosition);
@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
         // A, B, Right Trigger, Left Mouse, or Space (Button)
         private void OnShoot(InputValue value) {
             if (playerMobSpawned) {
-
+                playerMob.SetShooting();
             }
         }
 
@@ -65,6 +65,17 @@ public class PlayerManager : MonoBehaviour
         private void OnAim(InputValue value) {
             if (playerMobSpawned) {
                 Vector2 input = value.Get<Vector2>();
+                playerMob.SetAimInput(input);
+            }
+        }
+
+        // Mouse Position (2 Vector)
+        private void OnAimMouse(InputValue value) {
+            if (playerMobSpawned) {
+                Vector2 screenPos = value.Get<Vector2>();
+                Vector2 worldPos =  Camera.main.ScreenToWorldPoint(screenPos); // replace with personal camera once added !!!
+                Vector2 direction = (worldPos - (Vector2) playerMob.transform.position).normalized;
+                playerMob.SetAimInput(direction);
             }
         }
     #endregion
