@@ -50,8 +50,10 @@ MonoBehaviour:
   mob: {fileID: 0}
   spawner: {fileID: 0}
   score: 0
-  streak: 0
+  streak: 1
   playerCam: {fileID: 0}
+  testing1: 0
+  testing2: 0
 --- !u!114 &1372512020845650577
 MonoBehaviour:
   m_ObjectHideFlags: 0

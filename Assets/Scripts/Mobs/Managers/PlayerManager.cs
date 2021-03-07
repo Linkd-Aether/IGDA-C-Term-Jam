@@ -6,11 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerManager : MobManager
 {
     // Variables
-    public int score;
-    public int streak;
+    public int score = 0;
+    public int streak = 1;
     
     // Components & References
     public Camera playerCam;
+    private UICanvasManager uiManager;
 
 
     protected override void Awake() {
@@ -18,27 +19,43 @@ public class PlayerManager : MobManager
 
         mobPrefab = (GameObject) Resources.Load("Prefabs/Mobs/Mobs/PlayerMob");
         respawnWait = 5f;
-
-        score = 0;
-        streak = 0;
-
-        playerCam = Camera.main;
     }
 
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }
 
+    public void ConnectUIManager(UICanvasManager canvasManager) {
+        uiManager = canvasManager;
+    }
+
+    #region Score & Streak Functions
+        public void UpdateScore(int points) {
+            score += points;
+            uiManager.UpdateScore(score, points);
+        }
+
+        public void ResetStreak() {
+            streak = 1;
+            uiManager.UpdateStreak(streak);
+        }
+
+        public void IncrementStreak() {
+            streak += 1;
+            streak = Mathf.Clamp(streak, 1, 9);
+            uiManager.UpdateStreak(streak);
+        }
+
+        public void SetHealthUI(int health) {
+            uiManager.UpdateHealth(health);
+        }
+    #endregion
+
     #region Spawning & Death
         public override void RespawnMob() {
             base.RespawnMob();
 
             ResetStreak();
-        }
-
-        private void ResetStreak() {
-            streak = 0;
-            // reset streak as shown on screen !!!
         }
     #endregion
 

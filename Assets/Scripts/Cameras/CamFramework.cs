@@ -10,15 +10,14 @@ public class CamFramework : MonoBehaviour
     public List<DynCam> playerCameras;
     public int nonPlayerCams;
 
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         Instantiate(BountyCamPrefab).transform.position = new Vector3(0, -10, -10);
         nonPlayerCams = Camera.allCamerasCount;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddCamera()
     {
         players = GameManager.playerManagers;
         int playerCount = players.Count;

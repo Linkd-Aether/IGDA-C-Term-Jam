@@ -65,7 +65,7 @@ abstract public class Mob : FXobject
             return dashReflect;
         }
 
-        public void LoseHealth(Mob shooter) {
+        public virtual void LoseHealth(Mob shooter) {
             StartCoroutine(ColorFlash(RED, FLASH_LENGTH, FLASH_DARKEN_FX));
             health--;
             if (health <= 0) {

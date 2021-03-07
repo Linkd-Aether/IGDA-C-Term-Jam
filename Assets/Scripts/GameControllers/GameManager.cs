@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private Transform playerList;
     private Transform enemyList;
 
+    public CamFramework camFramework; // Shouldn't be public but is for now !!!
+
 
     private void Start() {
         playerManagers = new List<PlayerManager>();
@@ -31,5 +33,6 @@ public class GameManager : MonoBehaviour
         player.transform.parent = playerList;
         playerManagers.Add(player);
         player.gameObject.name = $"Player {playerManagers.Count}";
+        camFramework.AddCamera();
     }
 }

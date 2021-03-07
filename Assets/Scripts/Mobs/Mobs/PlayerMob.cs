@@ -37,6 +37,7 @@ public class PlayerMob : Mob
     {
         base.Start();
 
+        transform.parent.GetComponent<PlayerManager>().SetHealthUI(3);
         speed = 1000f; 
     }
 
@@ -94,6 +95,11 @@ public class PlayerMob : Mob
             SpawnDashReflect(lastDashCoordinate, transform.position);
             lastDashCoordinate = transform.position;
         }
+    }
+
+    public override void LoseHealth(Mob shooter) {
+        base.LoseHealth(shooter);
+        transform.parent.GetComponent<PlayerManager>().SetHealthUI(health);
     }
 
     #region Handle Control Changes

@@ -31,6 +31,7 @@ public class UICanvasManager : MonoBehaviour
 
     public void SetPlayer(int value) {
         playerValue = value;
+        GameManager.playerManagers[playerValue].ConnectUIManager(this);
         InitLayer(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"));
     }
 
@@ -41,40 +42,57 @@ public class UICanvasManager : MonoBehaviour
         }
     }
 
-    #region Canvas Resizing
-    public void ResizeCanvas(int playerCount) {
-        if ((playerCount == 3 && playerValue == 1) || (playerCount == 4 && (playerValue == 0 || playerValue == 2))) {
-            // Do not change the size of these canvases
-        } else {
-            float scalar = SCALAR[Mathf.Min(playerCount-1, 2)];
+    #region Update UI Elements
+        public void UpdateScore(int newTotal, int addedScore) {
 
-            ResizeHealthUI(scalar);
-            ResizeStreakUI(scalar);
-            ResizeScoreUI(scalar);
         }
-    }
 
-    private void ResizeHealthUI(float scalar) {
-        ResizeLocalScale(healthUI, scalar);
-        ResizeAnchorPos(healthUI, HEALTH_UI_ORIGIN, scalar);
-    }
-    
-    private void ResizeStreakUI(float scalar) {
-        ResizeLocalScale(streakUI, scalar);
-        ResizeAnchorPos(streakUI, STREAK_UI_ORIGIN, scalar);
-    }
+        public void UpdateStreak(int streak) {
+            Sprite digitImage = FontUtils.DigitToFont(streak);
+            
+            Transform streakIcon = streakUI.Find("StreakIcon");
+            streakIcon.GetComponent<SpriteRenderer>().sprite = digitImage;
+        }
 
-    private void ResizeScoreUI(float scalar) {
-        ResizeLocalScale(scoreUI, scalar);
-        ResizeAnchorPos(scoreUI, SCORE_UI_ORIGIN, scalar);
-    }
+        public void UpdateHealth(int health) {
+            
+        }
+    #endregion
 
-    private void ResizeLocalScale(RectTransform transform, float scalar) {
-        transform.localScale = Vector3.one * scalar;
-    }
+    #region Canvas Resizing
+        public void ResizeCanvas(int playerCount) {
+            if ((playerCount == 3 && playerValue == 1) || (playerCount == 4 && (playerValue == 0 || playerValue == 2))) {
+                // Do not change the size of these canvases
+            } else {
+                float scalar = SCALAR[Mathf.Min(playerCount-1, 2)];
 
-    private void ResizeAnchorPos(RectTransform transform, Vector3 origin, float scalar) {
-        transform.anchoredPosition = origin * scalar;
-    }
+                ResizeHealthUI(scalar);
+                ResizeStreakUI(scalar);
+                ResizeScoreUI(scalar);
+            }
+        }
+
+        private void ResizeHealthUI(float scalar) {
+            ResizeLocalScale(healthUI, scalar);
+            ResizeAnchorPos(healthUI, HEALTH_UI_ORIGIN, scalar);
+        }
+        
+        private void ResizeStreakUI(float scalar) {
+            ResizeLocalScale(streakUI, scalar);
+            ResizeAnchorPos(streakUI, STREAK_UI_ORIGIN, scalar);
+        }
+
+        private void ResizeScoreUI(float scalar) {
+            ResizeLocalScale(scoreUI, scalar);
+            ResizeAnchorPos(scoreUI, SCORE_UI_ORIGIN, scalar);
+        }
+
+        private void ResizeLocalScale(RectTransform transform, float scalar) {
+            transform.localScale = Vector3.one * scalar;
+        }
+
+        private void ResizeAnchorPos(RectTransform transform, Vector3 origin, float scalar) {
+            transform.anchoredPosition = origin * scalar;
+        }
     #endregion
 }
