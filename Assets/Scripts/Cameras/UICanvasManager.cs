@@ -58,6 +58,7 @@ public class UICanvasManager : MonoBehaviour
         public void UpdateScore(int addedScore) {
             scoreTarget += addedScore;
             StartCoroutine(ScoreLerp());
+            AudioManager.PlaySound("Payday");
         }
 
         private IEnumerator ScoreLerp() {

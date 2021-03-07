@@ -78,7 +78,6 @@ public class PlayerMob : Mob
         bullet.speed *= modifier;
 
         rb.AddForce(-aimDir * RECOIL * modifier);
-        // play bullet SE with pitch based on dash !!!
         if (dashing) StartCoroutine(EndDash());
 
         return bullet;

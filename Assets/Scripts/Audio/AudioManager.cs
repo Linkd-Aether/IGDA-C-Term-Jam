@@ -17,14 +17,17 @@ public class AudioManager : MonoBehaviour
     static private int intensity = 1;
 
     // Components & References
-    static private AudioSource audioSource;
+    static private AudioSource musicSource;
+    static private AudioSource soundSource;
     
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.pitch = PITCH_MIN;
+        musicSource = GetComponent<AudioSource>();
+        musicSource.pitch = PITCH_MIN;
         ChangeVolume(VOLUME_MIN);
+
+        soundSource = transform.Find("SFXPlayer").GetComponent<AudioSource>();
     }
 
     public void UpdateIntensity() {
@@ -46,12 +49,23 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    static public void PlaySound(string name) {
+        AudioClip clip = AudioLoader.GetAudio(name);
+
+        if (clip != null) {
+            AudioLoader.SetContext(soundSource, name);
+            soundSource.PlayOneShot(clip);
+        } else {
+            Debug.LogWarning($"{name} produced no relevant audio.");
+        }
+    }
+
     private void ChangeVolume(float volume) {
-        StartCoroutine(LerpValue(audioSource.volume, volume, VOLUME_CHANGE_RATE, VolumeLerp));
+        StartCoroutine(LerpValue(musicSource.volume, volume, VOLUME_CHANGE_RATE, VolumeLerp));
     }
 
     private void ChangePitch(float pitch) {
-        StartCoroutine(LerpValue(audioSource.pitch, pitch, PITCH_CHANGE_RATE, PitchLerp));
+        StartCoroutine(LerpValue(musicSource.pitch, pitch, PITCH_CHANGE_RATE, PitchLerp));
     }
 
     private IEnumerator LerpValue(float start, float target, float rate, LerpChange method) {
@@ -70,10 +84,10 @@ public class AudioManager : MonoBehaviour
     private delegate void LerpChange(float num);
 
     private void VolumeLerp(float volume) {
-        audioSource.volume = volume;
+        musicSource.volume = volume;
     }
 
     private void PitchLerp(float pitch) {
-        audioSource.pitch = pitch;
+        musicSource.pitch = pitch;
     }
 }

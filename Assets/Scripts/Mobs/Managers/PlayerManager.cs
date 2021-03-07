@@ -21,18 +21,6 @@ public class PlayerManager : MobManager
         respawnWait = 5f;
     }
 
-    public bool test1; public bool test2;
-    void Update() {
-        if (test1) {
-            test1 = false;
-            IncrementStreak();
-        }
-        if (test2) {
-            test2 = false;
-            ResetStreak();
-        }
-    }
-
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }
@@ -113,7 +101,7 @@ public class PlayerManager : MobManager
         private void OnAimMouse(InputValue value) {
             if (spawned && mob.isAlive) {
                 Vector2 screenPos = value.Get<Vector2>();
-                Vector2 worldPos =  playerCam.ScreenToWorldPoint(screenPos); // replace with personal camera once added !!!
+                Vector2 worldPos =  playerCam.ScreenToWorldPoint(screenPos);
                 Vector2 direction = (worldPos - (Vector2) mob.transform.position).normalized;
                 ((PlayerMob) mob).SetAimInput(direction);
             }

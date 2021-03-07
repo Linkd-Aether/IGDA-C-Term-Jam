@@ -31,7 +31,7 @@ public class Bullet : Projectile
 
     // Bullet has made contact with something
     public void Hit() {
-        // Explosive SE !!!
+        AudioManager.PlaySound("BulletHit");
         Destroy(this.gameObject);
     }
 

@@ -44,6 +44,8 @@ public class Spawner : MonoBehaviour
         mob.enabled = false;
         mob.LoadComponents();
 
+        if (mob is PlayerMob) AudioManager.PlaySound("Teleport");
+
         if (changes) SetStyle();
 
         mob.SetBaseColor(COLORS[color]);
