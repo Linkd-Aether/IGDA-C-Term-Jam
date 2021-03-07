@@ -23,17 +23,10 @@ public class DisplayNumber : MonoBehaviour
 
     private void Start()
     {
-        if (sprites[0] != Font0) {
-            sprites[0] = Font0;
-            sprites[1] = Font1;
-            sprites[2] = Font2;
-            sprites[3] = Font3;
-            sprites[4] = Font4;
-            sprites[5] = Font5;
-            sprites[6] = Font6;
-            sprites[7] = Font7;
-            sprites[8] = Font8;
-            sprites[9] = Font9;
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            string spriteName = $"Font{i}";
+            sprites[i] = (Sprite)Resources.Load($"Sprites/Font/{spriteName}", typeof(Sprite));
         }
     }
 
@@ -43,7 +36,6 @@ public class DisplayNumber : MonoBehaviour
 
         char[] chars = toDisplay.ToCharArray();
 
-        //Debug.Log("numch = " + transform.childCount);
         for (int i = 0; i < transform.childCount; i++)
         {
             if (chars[i] == 'x') transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = FontX;
@@ -61,7 +53,6 @@ public class DisplayNumber : MonoBehaviour
         for (int i = 0; i < transform.childCount - 1 - value.ToString().Length; i++)
             toDisplay += " ";
         toDisplay += "$" + value.ToString();
-        Debug.Log("\""+toDisplay+ "\"");
         Display(toDisplay);
     }
 

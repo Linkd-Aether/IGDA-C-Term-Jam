@@ -37,16 +37,20 @@ public class CamFramework : MonoBehaviour
         {
             Camera.allCameras[0].rect = new Rect((float)0.4, 0, (float)0.2, 1);
             Camera.allCameras[1].rect = new Rect(0, 0, (float)0.4, 1);
+            Camera.allCameras[1].orthographicSize = 7;
             Camera.allCameras[2].rect = new Rect((float)0.6, 0, (float)0.4, 1);
+            Camera.allCameras[2].orthographicSize = 7;
         }
         if (players.Count >= 3)
         {
             Camera.allCameras[1].rect = new Rect(0, (float)0.5, (float)0.4, (float)0.5);
+            Camera.allCameras[1].orthographicSize = 5;
             Camera.allCameras[3].rect = new Rect(0, 0, (float)0.4, (float)0.5);
         }
         if (players.Count == 4)
         {
             Camera.allCameras[2].rect = new Rect((float)0.6, (float)0.5, (float)0.4, (float)0.5);
+            Camera.allCameras[2].orthographicSize = 5;
             Camera.allCameras[4].rect = new Rect((float)0.6, 0, (float)0.4, (float)0.5);
         }
     }

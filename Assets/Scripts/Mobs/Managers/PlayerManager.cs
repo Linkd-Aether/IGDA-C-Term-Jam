@@ -20,7 +20,7 @@ public class PlayerManager : MobManager
         respawnWait = 5f;
 
         score = 0;
-        streak = 0;
+        streak = 1;
 
         playerCam = Camera.main;
     }
@@ -28,16 +28,21 @@ public class PlayerManager : MobManager
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }
+    public void TakeBounty(int reward)
+    {
+        score += reward;
+        streak++;
+    }
 
     #region Spawning & Death
-        public override void RespawnMob() {
+    public override void RespawnMob() {
             base.RespawnMob();
 
             ResetStreak();
         }
 
         private void ResetStreak() {
-            streak = 0;
+            streak = 1;
             // reset streak as shown on screen !!!
         }
     #endregion
