@@ -10,6 +10,7 @@ abstract public class Projectile : GFXobject
     
     // Variables
     public Mob shooter;
+    public Vector2 direction;
     protected float lifetime;
 
     // Components

@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerMob : Mob
 {
     // Constants
-    const float DASH_MOD = 4f;
+    const float DASH_MOD = 6f;
     const float DASH_BULLET_MOD = 1.5f;
-    const float DASH_MAX_TIME = .2f;
+    const float DASH_MAX_TIME = .35f;
     const float DASH_COOLDOWN = .6f;
-    const float DASH_REFLECT_DIST = .6f;
+    const float DASH_REFLECT_DIST = .65f;
     const float DRAW_AIM_DISTANCE = .15f;
 
     // Variables
@@ -109,7 +109,7 @@ public class PlayerMob : Mob
         public void SetAimInput(Vector2 input) {
             aimDir = (input == Vector2.zero) ? aimDir : input;            
             playerAim.localPosition = aimDir * DRAW_AIM_DISTANCE;
-            playerAim.localRotation = DirectionToAngle(aimDir);
+            playerAim.localRotation = Utils.DirectionToAngle(aimDir);
         }
     #endregion
 }

@@ -6,10 +6,11 @@ public class Bullet : Projectile
 {
     // Constants
     const float LIFETIME = 1f;
+    const float REFLECTION_BUFFER = .02f;
 
     // Variables
-    public Vector2 direction;
-    public float speed;
+    public float speed = 50f;
+    private float timeSinceLastReflect = 0;
 
 
     protected override void Start() {
@@ -19,6 +20,15 @@ public class Bullet : Projectile
         rb.AddForce(direction * speed);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (timeSinceLastReflect < REFLECTION_BUFFER) {
+            timeSinceLastReflect += Time.deltaTime;
+        }
+    }
+
     // Bullet has made contact with something
     public void Hit() {
         // Explosive SE !!!
@@ -26,15 +36,33 @@ public class Bullet : Projectile
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (shooter != collision.collider) {
-            if (collision.collider.tag == "Enemy" || collision.collider.tag == "Player") {
-                if (shooter != collision.collider) {
-                    // A Mob was hit
-                    Mob mob = collision.collider.GetComponent<Mob>();
-                    if (mob.isAlive) mob.LoseHealth(shooter);
-                }
+        if (collision.collider.tag == "Enemy" || collision.collider.tag == "Player") {
+                // A Mob was hit
+                Debug.Log(shooter);
+                Mob mob = collision.collider.GetComponent<Mob>();
+                if (mob.isAlive) mob.LoseHealth(shooter);
+                Hit();
+        } else if (collision.collider.tag == "Reflector") {
+            if (timeSinceLastReflect >= REFLECTION_BUFFER) {
+                DashReflect dashReflect = collision.collider.GetComponent<DashReflect>();
+                DeflectBullet(dashReflect);
             }
+            Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+        } else {
             Hit();
         }
+    }
+
+    private void DeflectBullet(DashReflect dashReflect) {
+        shooter = dashReflect.shooter;
+        SetBaseColor(shooter.baseColor);
+
+        lifetime = LIFETIME;
+        timeSinceLastReflect = 0;
+
+        direction = Vector2.Reflect(direction, dashReflect.transform.up);
+        transform.rotation = Utils.DirectionToAngle(direction);
+
+        rb.AddForce(direction * speed);
     }
 }

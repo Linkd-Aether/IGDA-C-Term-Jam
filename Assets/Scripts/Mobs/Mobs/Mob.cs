@@ -43,7 +43,7 @@ abstract public class Mob : GFXobject
         // Spawn a bullet with basic properties
         protected virtual Bullet SpawnProjectile() {
             Vector2 spawnPos = (Vector2) transform.position + aimDir;
-            GameObject bulletObj = Instantiate(bulletPrefab, spawnPos, DirectionToAngle(aimDir));
+            GameObject bulletObj = Instantiate(bulletPrefab, spawnPos, Utils.DirectionToAngle(aimDir));
             Bullet bullet = bulletObj.GetComponent<Bullet>();
             bullet.direction = aimDir;
             bullet.shooter = this;
@@ -55,7 +55,7 @@ abstract public class Mob : GFXobject
         // Spawn a segment of a DashReflect with basic properties
         protected virtual DashReflect SpawnDashReflect(Vector2 start, Vector2 end) {
             Vector2 dashDir = (end - start).normalized;
-            GameObject dashReflectObj = Instantiate(dashReflectPrefab, start, DirectionToAngle(dashDir));
+            GameObject dashReflectObj = Instantiate(dashReflectPrefab, start, Utils.DirectionToAngle(dashDir));
             DashReflect dashReflect = dashReflectObj.GetComponent<DashReflect>();
             dashReflect.shooter = this;
 
@@ -102,13 +102,6 @@ abstract public class Mob : GFXobject
             Destroy(this.gameObject);
             yield return null;
 
-        }
-    #endregion
-
-    #region Utils
-        protected Quaternion DirectionToAngle(Vector2 direction) {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            return Quaternion.Euler(0, 0, angle);
         }
     #endregion
 }
