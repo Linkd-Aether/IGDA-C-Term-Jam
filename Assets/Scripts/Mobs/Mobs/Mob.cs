@@ -66,7 +66,7 @@ abstract public class Mob : FXobject
         }
 
         public void LoseHealth(Mob shooter) {
-            DamageFlash(FLASH_LENGTH, FLASH_DARKEN_FX);
+            StartCoroutine(ColorFlash(RED, FLASH_LENGTH, FLASH_DARKEN_FX));
             health--;
             if (health <= 0) {
                 MobDeath(shooter);
@@ -90,22 +90,13 @@ abstract public class Mob : FXobject
 
         private IEnumerator DestroyMob()
         {
-            float alpha = 1;
-            while (alpha > 0) {
-                alpha -= Time.deltaTime / DEATH_TIME;
-                Color color = spriteRenderer.color;
-                color.a = alpha;
-                spriteRenderer.color = color;
-                yield return new WaitForEndOfFrame();
-            }
+            yield return StartCoroutine(FadeLerp(DEATH_TIME, 0));
             MobManager mobManager = transform.parent.GetComponent<MobManager>();
 
             mobManager.RespawnMob();
             mobManager.spawner.SetExistence(false);
 
             Destroy(this.gameObject);
-            yield return null;
-
         }
     #endregion
 }

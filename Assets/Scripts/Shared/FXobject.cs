@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class FXobject : GFXobject
 {
-    static Color BLACK = new Color(0,0,0,0);
-    static Color RED = new Color(165/255f,0,0,0);
-    static Color WHITE = new Color(1,1,1,0);
+    static protected Color BLACK = new Color(0,0,0,0);
+    static protected Color RED = new Color(165/255f,0,0,0);
+    static protected Color WHITE = new Color(1,1,1,0);
 
     public SpriteRenderer spriteOverlay;
 
@@ -27,23 +27,8 @@ public abstract class FXobject : GFXobject
         SetAlphaFX(0);
     }
 
-    #region Pre-Loaded FX
-        protected void DamageFlash(float fadeTime, float targetAlpha) {
-            StartCoroutine(ColorFlash(RED, fadeTime, targetAlpha));
-        }
-
-        protected void DashDarken(float fadeTime, float targetAlpha) {
-            spriteOverlay.color = BLACK;
-            StartCoroutine(AlphaLerpFX(fadeTime, targetAlpha));
-        }
-
-        protected void DashLighten(float fadeTime, float targetAlpha = 0) {
-            StartCoroutine(AlphaLerpFX(fadeTime, targetAlpha));
-        }
-    #endregion
-
     #region FX Tools
-        private IEnumerator ColorFlash(Color color, float fadeTime, float targetAlpha) {
+        protected IEnumerator ColorFlash(Color color, float fadeTime, float targetAlpha) {
             spriteOverlay.color = color;
 
             yield return StartCoroutine(AlphaLerpFX(fadeTime, targetAlpha));
@@ -52,7 +37,7 @@ public abstract class FXobject : GFXobject
             yield return null;
         }
 
-        private IEnumerator AlphaLerpFX(float fadeTime, float targetAlpha) {
+        protected IEnumerator AlphaLerpFX(float fadeTime, float targetAlpha) {
             float startingAlpha = spriteOverlay.color.a;
             float lerpT = 0;
 
@@ -65,5 +50,5 @@ public abstract class FXobject : GFXobject
             }
             yield return null;
         }
-        #endregion
+    #endregion
 }

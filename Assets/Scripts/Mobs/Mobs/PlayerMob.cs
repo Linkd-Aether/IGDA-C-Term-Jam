@@ -49,7 +49,7 @@ public class PlayerMob : Mob
                 dashTime += Time.fixedDeltaTime;
                 CheckDashReflect();
                 if (dashTime >= DASH_MAX_TIME) {
-                    EndDash();
+                    StartCoroutine(EndDash());
                 }
             } else if (dashCooldown > 0) {
                 dashCooldown -= Time.fixedDeltaTime;
@@ -78,15 +78,15 @@ public class PlayerMob : Mob
 
         rb.AddForce(-aimDir * RECOIL * modifier);
         // play bullet SE with pitch based on dash !!!
-        if (dashing) EndDash();
+        if (dashing) StartCoroutine(EndDash());
 
         return bullet;
     }
 
-    private void EndDash() {
+    private IEnumerator EndDash() {
         dashing = false;
+        yield return StartCoroutine(AlphaLerpFX(DASH_CHANGE_TIME, 0));
         isImmune = false;
-        DashLighten(DASH_CHANGE_TIME);
     }
 
     private void CheckDashReflect() {
@@ -108,11 +108,13 @@ public class PlayerMob : Mob
         public void SetDash() {
             if (dashCooldown <= 0) {
                 dashing = true;
-                isImmune = true;
                 dashTime = 0f;
                 dashCooldown = DASH_COOLDOWN;
                 lastDashCoordinate = transform.position;
-                DashDarken(DASH_CHANGE_TIME, DASH_DARKEN_FX);
+                
+                isImmune = true;
+                spriteOverlay.color = BLACK;
+                StartCoroutine(AlphaLerpFX(DASH_CHANGE_TIME, DASH_DARKEN_FX));
             }
         }
 

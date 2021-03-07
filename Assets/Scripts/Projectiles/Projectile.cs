@@ -33,7 +33,7 @@ abstract public class Projectile : GFXobject
     }
 
     protected IEnumerator Disappear() {
-        yield return StartCoroutine(FadeOut(FADEOUT_TIME));
+        yield return StartCoroutine(FadeLerp(FADEOUT_TIME, 0));
         Destroy(this.gameObject);
         yield return null;
     }
