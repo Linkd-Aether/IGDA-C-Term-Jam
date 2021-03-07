@@ -37,40 +37,6 @@ public abstract class GFXobject : MonoBehaviour
         }
     }
 
-    // protected IEnumerator FadeOut(float fadeTime, float fadeTarget = 0) {
-    //     float alpha = spriteRenderer.color.a;
-    //     while (alpha > fadeTarget) {
-    //         alpha -= Time.deltaTime / fadeTime;
-    //         SetAlpha(alpha);
-    //         yield return new WaitForEndOfFrame();
-    //     }
-    //     yield return null;
-    // }
-
-    // protected IEnumerator FadeIn(float fadeTime, float fadeTarget = 1) {
-    //     float alpha = spriteRenderer.color.a;
-    //     while (alpha < fadeTarget) {
-    //         alpha += Time.deltaTime / fadeTime;
-    //         SetAlpha(alpha);
-    //         yield return new WaitForEndOfFrame();
-    //     }
-    //     yield return null;
-    // }
-
-    // protected IEnumerator FadeLerp(float fadeTime, float targetAlpha) {
-    //     float startingAlpha = spriteRenderer.color.a;
-    //     float lerpT = 0;
-
-    //     while (lerpT < 1) {
-    //         lerpT += Time.deltaTime / fadeTime;
-    //         lerpT = Mathf.Clamp(lerpT, 0, 1);
-    //         float alpha = Mathf.Lerp(startingAlpha, targetAlpha, lerpT);
-    //         SetAlpha(alpha);
-    //         yield return new WaitForEndOfFrame();
-    //     }
-    //     yield return null;
-    // }
-
     protected IEnumerator FadeLerp(float fadeTime, float targetAlpha) {
         yield return StartCoroutine(Utils.FadeLerp(fadeTime, targetAlpha, spriteRenderer));
     }

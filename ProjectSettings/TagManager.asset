@@ -21,10 +21,10 @@ TagManager:
   - Obstacle
   - Enemy
   - Player
-  - 
-  - 
-  - 
-  - 
+  - UILayer0
+  - UILayer1
+  - UILayer2
+  - UILayer3
   - 
   - 
   - 
@@ -54,4 +54,7 @@ TagManager:
     locked: 0
   - name: FX
     uniqueID: 365325293
+    locked: 0
+  - name: UI
+    uniqueID: 2738111073
     locked: 0
