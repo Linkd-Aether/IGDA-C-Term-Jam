@@ -255,15 +255,6 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-  - first: {x: 0, y: -3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
   - first: {x: 1, y: -3, z: 0}
     second:
       serializedVersion: 2
@@ -506,7 +497,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: a7ff581b3f887eb4d85978508ce2c242, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 3f6520ab52a4e3143ba5e6cee5a27cc0, type: 2}
-  - m_RefCount: 8
+  - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: 1f8d5f8d16ae69c4b83f95e3cc0f1339, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: c635bc01f568a2d41a3c70614adf3630, type: 2}
@@ -523,7 +514,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 1acb0c74f3fab3341bb4b45dfc8d41c5, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 862c6b455eb240b498bc387d76678c9f, type: 3}
-  - m_RefCount: 8
+  - m_RefCount: 7
     m_Data: {fileID: 21300000, guid: 180356daca1f1934b93c78e87a7848cb, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 151097285f8f42c4a987e80ec25d1ac1, type: 3}
@@ -534,7 +525,7 @@ Tilemap:
   - m_RefCount: 6
     m_Data: {fileID: 21300000, guid: 2b3e65071d57da849ace66c3c5df5516, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 32
+  - m_RefCount: 31
     m_Data:
       e00: 1
       e01: 0
@@ -553,7 +544,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 32
+  - m_RefCount: 31
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -828,6 +819,8 @@ MonoBehaviour:
   CardBoard: {fileID: 1961781770}
   CardPrefab: {fileID: 6817247951654121347, guid: 6a362c86934dcfb45849020b365f99cb,
     type: 3}
+  FramesSinceLast: 0
+  FrameTarget: 0
 --- !u!1 &1376638553
 GameObject:
   m_ObjectHideFlags: 0
