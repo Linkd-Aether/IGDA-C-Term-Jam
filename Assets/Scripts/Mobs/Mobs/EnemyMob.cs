@@ -88,7 +88,7 @@ public class EnemyMob : Mob
 
     // Find the next target for the enemy in Patrol State
     private void PatrolNextTarget() {
-        target = patrolPath.nextNode();
+        target = patrolPath.NextNode();
         UpdatePath();
     }
 
@@ -127,12 +127,16 @@ public class EnemyMob : Mob
 
     // Search for target (used to keep track of player in combat)
     private void TargetSearch() {
-        if (PlayerSearch(target)) {
-            // Player target is visible and within range
-            shoot = true;
+        if (!target.GetComponent<Mob>().isAlive) {
+            ToPatrol();
         } else {
-            // Player target is not visible or out of range
-            shoot = false;
+            if (PlayerSearch(target)) {
+                // Player target is visible and within range
+                shoot = true;
+            } else {
+                // Player target is not visible or out of range
+                shoot = false;
+            }
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-abstract public class Mob : GFXobject
+abstract public class Mob : FXobject
 {
     // Prefab Reference
     private static GameObject bulletPrefab;
@@ -15,9 +15,12 @@ abstract public class Mob : GFXobject
     protected const int MAX_HEALTH = 3;
     protected const float BULLET_SPEED = 50f;
     protected const float DEATH_TIME = 2f;
+    protected const float FLASH_LENGTH = .2f;
+    protected const float FLASH_DARKEN_FX = 150/255f;
 
     // Variables
     public bool isAlive = true;
+    public bool isImmune = false;
     protected float speed = 400f;
     protected int health = MAX_HEALTH;
     protected Vector2 aimDir = Vector2.right;
@@ -63,7 +66,7 @@ abstract public class Mob : GFXobject
         }
 
         public void LoseHealth(Mob shooter) {
-            // flash sprite with damage !!!
+            DamageFlash(FLASH_LENGTH, FLASH_DARKEN_FX);
             health--;
             if (health <= 0) {
                 MobDeath(shooter);
@@ -74,6 +77,7 @@ abstract public class Mob : GFXobject
             if (deadBy is PlayerMob) {
                 // Check for bounty, have deadBy claim it if it exists !!!
             } else if (deadBy is EnemyMob) {
+                // Check for bounty, erase bounty if it exists !!!
                 EnemyMob enemy = (EnemyMob) deadBy;
                 enemy.ToPatrol();
             }

@@ -31,7 +31,7 @@ public abstract class GFXobject : MonoBehaviour
         spriteRenderer.sprite = sprite;
     }
 
-    public void LoadComponents() {
+    public virtual void LoadComponents() {
         foreach (Transform child in transform) {
             if (child.tag == "GFX") {
                 spriteRenderer = child.GetComponent<SpriteRenderer>();
@@ -39,10 +39,20 @@ public abstract class GFXobject : MonoBehaviour
         }
     }
 
-    protected IEnumerator FadeOut(float fadeTime) {
+    protected IEnumerator FadeOut(float fadeTime, float fadeTarget = 0) {
         float alpha = spriteRenderer.color.a;
-        while (alpha > 0) {
+        while (alpha > fadeTarget) {
             alpha -= Time.deltaTime / fadeTime;
+            SetAlpha(alpha);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
+    }
+
+    protected IEnumerator FadeIn(float fadeTime, float fadeTarget = 1) {
+        float alpha = spriteRenderer.color.a;
+        while (alpha < fadeTarget) {
+            alpha += Time.deltaTime / fadeTime;
             SetAlpha(alpha);
             yield return new WaitForEndOfFrame();
         }

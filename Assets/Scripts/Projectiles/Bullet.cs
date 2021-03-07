@@ -37,11 +37,11 @@ public class Bullet : Projectile
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.collider.tag == "Enemy" || collision.collider.tag == "Player") {
-                // A Mob was hit
-                Debug.Log(shooter);
-                Mob mob = collision.collider.GetComponent<Mob>();
+            Mob mob = collision.collider.GetComponent<Mob>();
+            if (!mob.isImmune) {
                 if (mob.isAlive) mob.LoseHealth(shooter);
-                Hit();
+            }
+            Hit();
         } else if (collision.collider.tag == "Reflector") {
             if (timeSinceLastReflect >= REFLECTION_BUFFER) {
                 DashReflect dashReflect = collision.collider.GetComponent<DashReflect>();

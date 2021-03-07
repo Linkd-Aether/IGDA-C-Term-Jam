@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - GFX
   - Reflector
+  - FX
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FX
+    uniqueID: 365325293
     locked: 0
