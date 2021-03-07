@@ -24,6 +24,8 @@ public class PlayerMob : Mob
     // Components & References
     private Transform playerAim;
 
+    ParticleSystem.EmissionModule particleEmissions;
+
 
     private void Awake() {
        foreach (Transform child in transform) {
@@ -42,6 +44,8 @@ public class PlayerMob : Mob
     }
 
     private void FixedUpdate() {
+        particleEmissions = GetComponent<ParticleSystem>().emission;
+        particleEmissions.enabled = isBounty;
         if (isAlive) {
             // Movement
             Vector2 force = moveInput * speed * Time.fixedDeltaTime;

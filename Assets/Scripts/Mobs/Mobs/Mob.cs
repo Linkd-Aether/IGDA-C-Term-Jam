@@ -21,6 +21,7 @@ abstract public class Mob : FXobject
     // Variables
     public bool isAlive = true;
     public bool isImmune = false;
+    public bool isBounty = false;
     protected float speed = 400f;
     protected int health = MAX_HEALTH;
     protected Vector2 aimDir = Vector2.right;
@@ -42,7 +43,7 @@ abstract public class Mob : FXobject
         LoadComponents();
     }
 
-    #region Comabt
+    #region Combat
         // Spawn a bullet with basic properties
         protected virtual Bullet SpawnProjectile() {
             Vector2 spawnPos = (Vector2) transform.position + aimDir;
@@ -93,6 +94,7 @@ abstract public class Mob : FXobject
             }
 
             isAlive = false;
+            isBounty = false;
             GetComponent<Collider2D>().enabled = false;
             GetComponentInParent<MobManager>().spawned = false;
             StartCoroutine(DestroyMob());

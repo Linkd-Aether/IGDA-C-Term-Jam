@@ -142,6 +142,7 @@ public class BountyGen : MonoBehaviour
         GameObject card;
         card = Instantiate(CardPrefab, CardBoard.transform);
         card.GetComponent<CardScript>().AssignTarget(target.GetComponentInChildren<Mob>());
+        target.GetComponentInChildren<Mob>().isBounty = true;
         cards.Add(card.GetComponent<CardScript>());
 
     }

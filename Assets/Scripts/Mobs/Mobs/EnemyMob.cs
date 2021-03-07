@@ -24,8 +24,9 @@ public class EnemyMob : Mob
     private Path path;
 
     private EnemyPath patrolPath;
-    private Transform target; 
+    private Transform target;
 
+    ParticleSystem.EmissionModule particleEmissions;
 
     protected override void Start()
     {
@@ -37,6 +38,8 @@ public class EnemyMob : Mob
     }
 
     private void FixedUpdate() {
+        particleEmissions = GetComponent<ParticleSystem>().emission;
+        particleEmissions.enabled = isBounty;
         if (isAlive) {
             if (state == State.Combat) {
                 if ((target.position - transform.position).sqrMagnitude > MAX_CHASE_DIST * MAX_CHASE_DIST){
