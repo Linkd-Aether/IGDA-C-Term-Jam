@@ -9,18 +9,22 @@ public class GameManager : MonoBehaviour
     static public List<PlayerManager> playerManagers { get; private set; }
 
     private Spawner[] spawners;
+    private Transform playerList;
+    private Transform enemyList;
 
 
     private void Start() {
         playerManagers = new List<PlayerManager>();
 
         spawners = GetComponentsInChildren<Spawner>();
+        playerList = transform.Find("Players");
+        enemyList = transform.Find("Enemies");
     }
 
     private void OnPlayerJoined(PlayerInput playerInput) {
         PlayerManager player = playerInput.gameObject.GetComponent<PlayerManager>();
         player.ConnectSpawner(spawners[playerManagers.Count]);
-        player.transform.parent = transform;
+        player.transform.parent = playerList;
         playerManagers.Add(player);
         player.gameObject.name = $"Player {playerManagers.Count}";
     }

@@ -35,7 +35,7 @@ abstract public class Mob : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         LoadComponents();
 
-        
+
     }
 
     public void LoadComponents() {
@@ -75,6 +75,7 @@ abstract public class Mob : MonoBehaviour
         }
 
         isAlive = false;
+        GetComponent<Collider2D>().enabled = false;
         GetComponentInParent<MobManager>().spawned = false;
         StartCoroutine(DestroyMob());
     }

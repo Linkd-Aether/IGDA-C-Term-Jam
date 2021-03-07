@@ -39,6 +39,7 @@ abstract public class MobManager : MonoBehaviour
 
             spawned = true;
             mob.enabled = true;
+            mob.GetComponent<Collider2D>().enabled = false;
 
             float alpha = 0;
             while(alpha < 1) {
@@ -70,6 +71,7 @@ abstract public class MobManager : MonoBehaviour
 
         protected virtual IEnumerator MobSpawned() {
             mob.isAlive = true;
+            mob.GetComponent<Collider2D>().enabled = true;
             yield return null;
         }
     #endregion
