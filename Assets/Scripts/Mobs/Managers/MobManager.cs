@@ -40,17 +40,10 @@ abstract public class MobManager : MonoBehaviour
             mob.enabled = true;
             mob.GetComponent<Collider2D>().enabled = false;
 
-            float alpha = 0;
-            while(alpha < 1) {
-                alpha += Time.deltaTime / RESPAWN_TIME;
-                alpha = Mathf.Clamp(alpha,0,1);
-                mob.SetAlpha(alpha);
-                yield return new WaitForEndOfFrame();
-            }
+            yield return StartCoroutine(Utils.FadeLerp(RESPAWN_TIME,1,mob.spriteRenderer));
 
             mob.isAlive = true;
             mob.GetComponent<Collider2D>().enabled = true;
-            yield return null;
         }
     #endregion
 }

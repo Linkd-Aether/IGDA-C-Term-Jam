@@ -28,7 +28,7 @@ public class EnemyPath : MonoBehaviour
         }
     }
 
-    public Transform nextNode() {
+    public Transform NextNode() {
         currentNode = (currentNode + 1) % nodes.Length;
         return nodes[currentNode];
     }

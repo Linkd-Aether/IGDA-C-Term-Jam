@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Projectile
   - GFX
+  - Reflector
+  - FX
   layers:
   - Default
   - TransparentFX
@@ -44,6 +46,12 @@ TagManager:
   - name: Background
     uniqueID: 2924274689
     locked: 0
+  - name: Projectile
+    uniqueID: 1568898977
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FX
+    uniqueID: 365325293
     locked: 0
