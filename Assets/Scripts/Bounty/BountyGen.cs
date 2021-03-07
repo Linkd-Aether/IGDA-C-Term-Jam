@@ -106,6 +106,7 @@ public class BountyGen : MonoBehaviour
         card = Instantiate(CardPrefab, CardBoard.transform);
         card.GetComponent<CardScript>().AssignTarget(target.GetComponentInChildren<Mob>());
         cards.Add(card.GetComponent<CardScript>());
+
     }
     void summonEn(EnemyMob target)
     {

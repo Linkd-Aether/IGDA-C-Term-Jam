@@ -81,7 +81,7 @@ public class PlayerMob : Mob
     protected override void MobDeath(Mob deadBy) {
         base.MobDeath(deadBy);
 
-        transform.parent.GetComponent<PlayerManager>().DeathPlayerMob();
+        transform.parent.GetComponent<PlayerManager>().spawned = false;
     }
 
     #region Handle Control Changes

@@ -33,7 +33,7 @@ public class EnemyMob : Mob
         seeker = GetComponent<Seeker>();
         patrolPath = transform.parent.GetComponentInChildren<EnemyPath>();
 
-        ToPatrol();
+        StartCoroutine(InitPatrol());
     }
 
     private void FixedUpdate() {
@@ -69,13 +69,13 @@ public class EnemyMob : Mob
         }
     }
 
-    protected override void MobDeath(Mob byDeath) {
-        base.MobDeath(byDeath);
-
-        transform.parent.GetComponentInChildren<EnemyManager>().DeathEnemyMob();
+    #region Pathfinding
+    private IEnumerator InitPatrol() {
+        yield return new WaitForSeconds(1f);
+        ToPatrol();
+        yield return null;
     }
 
-    #region Pathfinding
     // -> Combat State
     private void ToCombat(Transform player) {
         CancelInvoke();
@@ -89,6 +89,7 @@ public class EnemyMob : Mob
     // Find the next target for the enemy in Patrol State
     private void PatrolNextTarget() {
         target = patrolPath.nextNode();
+        Debug.Log($"target {target.gameObject.name} & {target.position}");
         UpdatePath();
     }
 
@@ -104,6 +105,7 @@ public class EnemyMob : Mob
     private void UpdatePath() {
         if (seeker.IsDone()) {
             seeker.StartPath(rb.position, target.position, PathFindComplete);
+            Debug.Log($"Start path to {target.gameObject.name}");
         }
     }
 
@@ -118,8 +120,8 @@ public class EnemyMob : Mob
     // Search for all players while in Patrol State
     private void PlayersSearch() {
         foreach (PlayerManager playerManager in GameManager.playerManagers) {
-            if (playerManager.spawnedAndAlive) {
-                Transform player = playerManager.playerMob.transform;
+            if (playerManager.spawned && playerManager.mob.isAlive) {
+                Transform player = playerManager.mob.transform;
                 if (PlayerSearch(player)) ToCombat(player);
             }
         }
