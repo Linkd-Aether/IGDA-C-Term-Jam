@@ -33,6 +33,7 @@ public class CardScript : MonoBehaviour
         Claimed = false;
 
         CreateCard();
+        AudioManager.PlaySound("BountyPost");
     }
 
     // Update is called once per frame

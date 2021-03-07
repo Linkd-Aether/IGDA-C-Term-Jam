@@ -43,12 +43,14 @@ public class PlayerManager : MobManager
         public void ResetStreak() {
             streak = 1;
             uiManager.UpdateStreak(streak);
+            transform.parent.parent.GetComponent<GameManager>().audioManager.UpdateIntensity();
         }
 
         public void IncrementStreak() {
             streak += 1;
             streak = Mathf.Clamp(streak, 1, 9);
             uiManager.UpdateStreak(streak);
+            transform.parent.parent.GetComponent<GameManager>().audioManager.UpdateIntensity();
         }
 
         public void SetHealthUI(int health) {
@@ -73,7 +75,7 @@ public class PlayerManager : MobManager
             }
         }
 
-        // A, B, Right Trigger, Left Mouse, or Space (Button)
+        // A, B, Right Trigger, or Left Mouse (Button)
         private void OnShoot(InputValue value) {
             if (spawned && mob.isAlive) {
                 ((PlayerMob) mob).SetShooting();
@@ -87,7 +89,7 @@ public class PlayerManager : MobManager
             }
         }
 
-        // Right Joystick or Arrows (2 Vector)
+        // Right Joystick (2 Vector)
         private void OnAim(InputValue value) {
             if (spawned && mob.isAlive) {
                 Vector2 input = value.Get<Vector2>();
@@ -99,7 +101,7 @@ public class PlayerManager : MobManager
         private void OnAimMouse(InputValue value) {
             if (spawned && mob.isAlive) {
                 Vector2 screenPos = value.Get<Vector2>();
-                Vector2 worldPos =  playerCam.ScreenToWorldPoint(screenPos); // replace with personal camera once added !!!
+                Vector2 worldPos =  playerCam.ScreenToWorldPoint(screenPos);
                 Vector2 direction = (worldPos - (Vector2) mob.transform.position).normalized;
                 ((PlayerMob) mob).SetAimInput(direction);
             }

@@ -52,7 +52,7 @@ abstract public class Mob : FXobject
             bullet.direction = aimDir;
             bullet.shooter = this;
             bullet.speed = BULLET_SPEED;
-
+            AudioManager.PlaySound("BulletShot");
             return bullet;
         }
 
@@ -62,7 +62,7 @@ abstract public class Mob : FXobject
             GameObject dashReflectObj = Instantiate(dashReflectPrefab, start, Utils.DirectionToAngle(dashDir));
             DashReflect dashReflect = dashReflectObj.GetComponent<DashReflect>();
             dashReflect.shooter = this;
-
+            AudioManager.PlaySound("Sizzle");
             return dashReflect;
         }
 
@@ -98,6 +98,7 @@ abstract public class Mob : FXobject
             GetComponent<Collider2D>().enabled = false;
             GetComponentInParent<MobManager>().spawned = false;
             StartCoroutine(DestroyMob());
+            AudioManager.PlaySound("Death");
         }
 
         private IEnumerator DestroyMob()
