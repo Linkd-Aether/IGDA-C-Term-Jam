@@ -129,7 +129,7 @@ public class BountyGen : MonoBehaviour
                 {
                     int rand = Random.Range(0, GameManager.GetEnemies().Length);
                     enemy = GameManager.GetEnemies()[rand];
-                    unique = cards.FindIndex(c => c.Target.Equals(enemy.mob));
+                    if(enemy.mob.isAlive) unique = cards.FindIndex(c => c.Target.Equals(enemy.mob));
                 }
                 Mark(enemy);
             }
