@@ -22,4 +22,12 @@ static public class FontUtils
         }
         return getDigitSprites()[digit];
     }
+
+    static public Sprite DigitInNumToFont(int num, int pos) {
+        while (pos -- > 0) {
+            num /= 10;
+        }
+        num %= 10;
+        return DigitToFont(num);
+    }
 }

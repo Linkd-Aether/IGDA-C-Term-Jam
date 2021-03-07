@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     // Components & References
     static public List<PlayerManager> playerManagers { get; private set; }
 
-    private Spawner[] spawners;
-    private Transform playerList;
+    static private Spawner[] spawners;
+    static private Transform playerList;
     static private Transform enemyList;
 
     public CamFramework camFramework; // Shouldn't be public but is for now !!!
@@ -39,5 +39,9 @@ public class GameManager : MonoBehaviour
     static public EnemyManager[] GetEnemies()
     {
         return enemyList.GetComponentsInChildren<EnemyManager>();
+    }
+
+    static public Color GetColor(int player) {
+        return Spawner.COLORS[spawners[player].color];
     }
 }

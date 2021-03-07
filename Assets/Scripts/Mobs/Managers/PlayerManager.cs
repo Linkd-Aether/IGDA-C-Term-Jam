@@ -26,8 +26,8 @@ public class PlayerManager : MobManager
     }
     public void TakeBounty(int reward)
     {
-        score += reward;
-        streak++;
+        UpdateScore(reward);
+        IncrementStreak();
     }
 
     public void ConnectUIManager(UICanvasManager canvasManager) {
@@ -37,7 +37,7 @@ public class PlayerManager : MobManager
     #region Score & Streak Functions
         public void UpdateScore(int points) {
             score += points;
-            uiManager.UpdateScore(score, points);
+            uiManager.UpdateScore(points);
         }
 
         public void ResetStreak() {

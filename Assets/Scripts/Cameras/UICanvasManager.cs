@@ -10,9 +10,17 @@ public class UICanvasManager : MonoBehaviour
     static private Vector3 HEALTH_UI_ORIGIN;
     static private Vector3 STREAK_UI_ORIGIN;
     static private Vector3 SCORE_UI_ORIGIN;
-
     static private float[] SCALAR = new float[3] { 1, .75f, .5f };
+    static private float HEALTH_FADE_TIME = .5f;
+    static private float HEALTH_FADE_ALPHA = .4f;
+    static private int SCORE_RAISE_SPEED = 5000;
+    
+    // Variables
     private int playerValue;
+    private int healthDisplayed = 0;
+    private int healthTarget = 0; // 0-3 for number of health
+    private int scoreDisplayed = 0;
+    private int scoreTarget = 0;
 
     // Components
     private RectTransform healthUI;
@@ -32,19 +40,46 @@ public class UICanvasManager : MonoBehaviour
     public void SetPlayer(int value) {
         playerValue = value;
         GameManager.playerManagers[playerValue].ConnectUIManager(this);
-        InitLayer(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"));
+        InitComponents(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"), GameManager.GetColor(playerValue));
     }
 
-    private void InitLayer(GameObject obj, int layer) {
+    private void InitComponents(GameObject obj, int layer, Color color) {
         obj.layer = layer;
+
+        SpriteRenderer spr = obj.GetComponent<SpriteRenderer>();
+        if (spr != null) spr.color = color;
+
         foreach (Transform child in obj.transform) {
-            InitLayer(child.gameObject, layer);
+            InitComponents(child.gameObject, layer, color);
         }
     }
 
     #region Update UI Elements
-        public void UpdateScore(int newTotal, int addedScore) {
+        public void UpdateScore(int addedScore) {
+            scoreTarget += addedScore;
+            StartCoroutine(ScoreLerp());
+        }
 
+        private IEnumerator ScoreLerp() {
+            int scoreStart = scoreDisplayed;
+            float lerpT = 0;
+            float fadeTime = (float) (scoreTarget - scoreStart) / (float) SCORE_RAISE_SPEED;
+
+            while (lerpT < 1) {
+                lerpT += Time.deltaTime / fadeTime;
+                lerpT = Mathf.Clamp(lerpT, 0, 1);
+                scoreDisplayed = (int) Mathf.Lerp(scoreStart, scoreTarget, lerpT);
+                SetScoreUI(scoreDisplayed);
+                yield return new WaitForEndOfFrame();
+            }
+            yield return null;
+        }
+
+        private void SetScoreUI(int score) {
+            SpriteRenderer[] spriteRenderers = scoreUI.GetComponentsInChildren<SpriteRenderer>();
+            for (int i = spriteRenderers.Length - 1; i >= 1; i--) {
+                spriteRenderers[i].sprite = FontUtils.DigitInNumToFont(score, spriteRenderers.Length - 1 - i);
+            } 
         }
 
         public void UpdateStreak(int streak) {
@@ -55,7 +90,23 @@ public class UICanvasManager : MonoBehaviour
         }
 
         public void UpdateHealth(int health) {
-            
+            healthTarget = health;
+            if (healthTarget < healthDisplayed) {
+                // lose health
+                SpriteRenderer target = healthUI.GetComponentsInChildren<SpriteRenderer>()[healthDisplayed - 1];
+                StartCoroutine(HealthFade(HEALTH_FADE_ALPHA, target));
+                healthDisplayed--;
+            } else if (healthTarget > healthDisplayed) {
+                // gain health
+                SpriteRenderer target = healthUI.GetComponentsInChildren<SpriteRenderer>()[healthDisplayed];
+                StartCoroutine(HealthFade(1, target));
+                healthDisplayed++;
+            }
+        }
+
+        private IEnumerator HealthFade(float targetAlpha, SpriteRenderer spriteRenderer) {
+            yield return StartCoroutine(Utils.FadeLerp(HEALTH_FADE_TIME, targetAlpha, spriteRenderer));
+            UpdateHealth(healthTarget);
         }
     #endregion
 
