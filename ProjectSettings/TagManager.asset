@@ -43,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: SuperBackground
+    uniqueID: 668627945
+    locked: 0
   - name: Background
     uniqueID: 2924274689
     locked: 0
