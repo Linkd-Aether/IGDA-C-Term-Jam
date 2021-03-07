@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private Spawner[] spawners;
     private Transform playerList;
-    private Transform enemyList;
+    static private Transform enemyList;
 
 
     private void Start() {
@@ -31,5 +31,10 @@ public class GameManager : MonoBehaviour
         player.transform.parent = playerList;
         playerManagers.Add(player);
         player.gameObject.name = $"Player {playerManagers.Count}";
+    }
+
+    static public EnemyManager[] GetEnemies()
+    {
+        return enemyList.GetComponentsInChildren<EnemyManager>();
     }
 }
