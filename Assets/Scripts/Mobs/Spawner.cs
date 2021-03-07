@@ -7,13 +7,14 @@ public class Spawner : MonoBehaviour
     // Constants
     public static Sprite[] VARIANTS = new Sprite[6];
     public static Color[] COLORS = new Color[] {
-        new Color(230f/255f, 50f/255f,  200f/255f,  100f/255f),
-        new Color(255f/255f, 180f/255f, 50f/255f,   100f/255f),
-        new Color(255f/255f, 80f/255f,  80f/255f,   100f/255f),
-        new Color(115f/255f, 100f/255f, 255f/255f,  100f/255f),
-        new Color(100f/255f, 255f/255f, 100f/255f,  100f/255f),
-        new Color(30f/255f,  210f/255f, 255f/255f,  100f/255f)
+        new Color(230f/255f, 50f/255f,  200f/255f,  1),
+        new Color(255f/255f, 180f/255f, 50f/255f,   1),
+        new Color(255f/255f, 80f/255f,  80f/255f,   1),
+        new Color(115f/255f, 100f/255f, 255f/255f,  1),
+        new Color(100f/255f, 255f/255f, 100f/255f,  1),
+        new Color(30f/255f,  210f/255f, 255f/255f,  1)
     };
+    const float SPAWNER_ALPHA = 100/255f;
 
     // Variables
     static bool[,] existingMobs = new bool[Spawner.VARIANTS.Length, Spawner.COLORS.Length];
@@ -45,7 +46,7 @@ public class Spawner : MonoBehaviour
 
         if (changes) SetStyle();
 
-        mob.SetColor(COLORS[color]);
+        mob.SetBaseColor(COLORS[color]);
         mob.SetAlpha(0);
         mob.SetSprite(VARIANTS[variant]);
 
@@ -54,7 +55,9 @@ public class Spawner : MonoBehaviour
 
     public void FixStyleForPlayer() {
         SetStyle();
-        GetComponent<SpriteRenderer>().color = COLORS[color];
+        Color spawnerColor = COLORS[color];
+        spawnerColor.a = SPAWNER_ALPHA;
+        GetComponent<SpriteRenderer>().color = spawnerColor;
         changes = false;
     }
 

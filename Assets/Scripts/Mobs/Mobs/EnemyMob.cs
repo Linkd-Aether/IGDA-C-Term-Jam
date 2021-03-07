@@ -89,7 +89,6 @@ public class EnemyMob : Mob
     // Find the next target for the enemy in Patrol State
     private void PatrolNextTarget() {
         target = patrolPath.nextNode();
-        Debug.Log($"target {target.gameObject.name} & {target.position}");
         UpdatePath();
     }
 
@@ -105,7 +104,6 @@ public class EnemyMob : Mob
     private void UpdatePath() {
         if (seeker.IsDone()) {
             seeker.StartPath(rb.position, target.position, PathFindComplete);
-            Debug.Log($"Start path to {target.gameObject.name}");
         }
     }
 

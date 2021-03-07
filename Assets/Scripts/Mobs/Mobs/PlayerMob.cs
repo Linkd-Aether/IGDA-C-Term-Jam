@@ -9,6 +9,7 @@ public class PlayerMob : Mob
     const float DASH_BULLET_MOD = 1.5f;
     const float DASH_MAX_TIME = .2f;
     const float DASH_COOLDOWN = .6f;
+    const float DASH_REFLECT_DIST = .6f;
     const float DRAW_AIM_DISTANCE = .15f;
 
     // Variables
@@ -16,6 +17,7 @@ public class PlayerMob : Mob
     private bool dash = false;
     private float dashTime = 0f;
     private float dashCooldown = 0f;
+    private Vector2 lastDashCoordinate;
 
     // Components & References
     private Transform playerAim;
@@ -43,6 +45,7 @@ public class PlayerMob : Mob
             if (dash) {
                 force *= DASH_MOD;
                 dashTime += Time.fixedDeltaTime;
+                CheckDashReflect();
                 if (dashTime >= DASH_MAX_TIME) {
                     dash = false;
                 }
@@ -78,10 +81,11 @@ public class PlayerMob : Mob
         return bullet;
     }
 
-    protected override void MobDeath(Mob deadBy) {
-        base.MobDeath(deadBy);
-
-        transform.parent.GetComponent<PlayerManager>().spawned = false;
+    private void CheckDashReflect() {
+        if (Vector2.Distance(lastDashCoordinate, transform.position) >= DASH_REFLECT_DIST) {
+            SpawnDashReflect(lastDashCoordinate, transform.position);
+            lastDashCoordinate = transform.position;
+        }
     }
 
     #region Handle Control Changes
@@ -98,13 +102,14 @@ public class PlayerMob : Mob
                 dash = true;
                 dashTime = 0f;
                 dashCooldown = DASH_COOLDOWN;
+                lastDashCoordinate = transform.position;
             }
         }
 
         public void SetAimInput(Vector2 input) {
             aimDir = (input == Vector2.zero) ? aimDir : input;            
             playerAim.localPosition = aimDir * DRAW_AIM_DISTANCE;
-            playerAim.localRotation = AimDirToAngle();
+            playerAim.localRotation = DirectionToAngle(aimDir);
         }
     #endregion
 }

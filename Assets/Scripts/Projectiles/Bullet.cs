@@ -2,35 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Bullet : MonoBehaviour
+public class Bullet : Projectile
 {
     // Constants
     const float LIFETIME = 1f;
 
     // Variables
-    public Mob shooter;
     public Vector2 direction;
     public float speed;
-    private float lifetime = LIFETIME;
-
-    // Components
-    private Rigidbody2D rb;
 
 
-    void Start() {
-        rb = GetComponent<Rigidbody2D>();
+    protected override void Start() {
+        base.Start();
+
+        lifetime = LIFETIME;
         rb.AddForce(direction * speed);
     }
 
-    private void Update() {
-        lifetime -= Time.deltaTime;
-        if (lifetime <= 0) {
-            Destroy(this.gameObject);
-        }
-    }
-
-    // Bullet has made contanct with something
+    // Bullet has made contact with something
     public void Hit() {
         // Explosive SE !!!
         Destroy(this.gameObject);
