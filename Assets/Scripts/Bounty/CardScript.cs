@@ -7,6 +7,7 @@ public class CardScript : MonoBehaviour
     //Bounty Card Resources
     public int Value { get; set; }
     public Mob Target { get; set; }
+    SpriteRenderer TargetRenderer;
     Sprite CardBorder;
     Sprite CardBorder1;
     Sprite CardBorder2;
@@ -68,8 +69,16 @@ public class CardScript : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = CardBorder1;
         }
 
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Target.GetComponentInChildren<SpriteRenderer>().sprite;
-        transform.GetChild(0).GetComponent<SpriteRenderer>().color = Target.GetComponentInChildren<SpriteRenderer>().color;
+        foreach (Transform child in Target.transform)
+        {
+            if (child.tag == "GFX")
+            {
+                 TargetRenderer = child.GetComponent<SpriteRenderer>();
+            }
+        }
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = TargetRenderer.sprite;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = TargetRenderer.color;
         transform.GetChild(1).GetComponent<DisplayNumber>().DisplayMoney(Value);
     }
 

@@ -26,8 +26,9 @@ public class PlayerManager : MobManager
     }
     public void TakeBounty(int reward)
     {
-        score += reward;
+        score += streak * reward;
         streak++;
+
     }
 
     public void ConnectUIManager(UICanvasManager canvasManager) {
