@@ -21,6 +21,18 @@ public class PlayerManager : MobManager
         respawnWait = 5f;
     }
 
+    public bool test1; public bool test2;
+    void Update() {
+        if (test1) {
+            test1 = false;
+            IncrementStreak();
+        }
+        if (test2) {
+            test2 = false;
+            ResetStreak();
+        }
+    }
+
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }
@@ -43,12 +55,14 @@ public class PlayerManager : MobManager
         public void ResetStreak() {
             streak = 1;
             uiManager.UpdateStreak(streak);
+            transform.parent.parent.GetComponent<GameManager>().audioManager.UpdateIntensity();
         }
 
         public void IncrementStreak() {
             streak += 1;
             streak = Mathf.Clamp(streak, 1, 9);
             uiManager.UpdateStreak(streak);
+            transform.parent.parent.GetComponent<GameManager>().audioManager.UpdateIntensity();
         }
 
         public void SetHealthUI(int health) {
@@ -73,7 +87,7 @@ public class PlayerManager : MobManager
             }
         }
 
-        // A, B, Right Trigger, Left Mouse, or Space (Button)
+        // A, B, Right Trigger, or Left Mouse (Button)
         private void OnShoot(InputValue value) {
             if (spawned && mob.isAlive) {
                 ((PlayerMob) mob).SetShooting();
@@ -87,7 +101,7 @@ public class PlayerManager : MobManager
             }
         }
 
-        // Right Joystick or Arrows (2 Vector)
+        // Right Joystick (2 Vector)
         private void OnAim(InputValue value) {
             if (spawned && mob.isAlive) {
                 Vector2 input = value.Get<Vector2>();

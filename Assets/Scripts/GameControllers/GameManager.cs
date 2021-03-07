@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     static private Transform enemyList;
 
     public CamFramework camFramework; // Shouldn't be public but is for now !!!
+    public AudioManager audioManager; // Shouldn't be public but is for now !!!
 
 
     private void Start() {
