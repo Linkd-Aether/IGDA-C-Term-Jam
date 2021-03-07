@@ -120,7 +120,7 @@ public class BountyGen : MonoBehaviour
                 if (card.Target is EnemyMob) activeEnemyBounties++;
             }
 
-            if (activeEnemyBounties < GameManager.GetEnemies().Length)
+            if (activeEnemyBounties < GameManager.GetEnemies().Length && GameManager.GetEnemies().Length > 0)
             {
                 int unique = 0;
                 EnemyManager enemy = null;
@@ -154,8 +154,9 @@ public class BountyGen : MonoBehaviour
     static public int ClaimCard(int index)
     {
         CardScript removed = cards[index];
+        int Reward = removed.Value;
         cards.RemoveAt(index);
         Destroy(removed.transform.gameObject);
-        return removed.Value;
+        return Reward;
     }
 }

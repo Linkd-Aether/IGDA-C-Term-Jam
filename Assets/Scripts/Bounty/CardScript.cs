@@ -66,7 +66,6 @@ public class CardScript : MonoBehaviour
             Value = uninflatedValue * 1000;
 
             GetComponent<SpriteRenderer>().sprite = CardBorder1;
-            //Debug.LogError(CardBorder1);
         }
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Target.GetComponentInChildren<SpriteRenderer>().sprite;
