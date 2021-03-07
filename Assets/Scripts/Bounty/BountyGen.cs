@@ -8,9 +8,9 @@ public class BountyGen : MonoBehaviour
     public GameObject CardPrefab;
     List<PlayerManager> players;
     List<CardScript> cards;
-    int FramesSinceLast;
-    int FrameTarget;
-    float Intensity;
+    public int FramesSinceLast;
+    public int FrameTarget;
+    public static float Intensity;
     int IntensityCount;
 
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class BountyGen : MonoBehaviour
         players = GameManager.playerManagers;
         cards = new List<CardScript>();
         FramesSinceLast = 0;
-        FrameTarget = 900;
+        FrameTarget = 300;
         Intensity = 1;
         IntensityCount = 0;
     }
@@ -29,22 +29,22 @@ public class BountyGen : MonoBehaviour
     {
         if(players.Count == 1)
         {
-            CardBoard.transform.position = new Vector2(8.5F, 0);
+            CardBoard.transform.position = new Vector3(7, -10, -1);
         }
         else
         {
-            CardBoard.transform.position = new Vector2(0, 0);
+            CardBoard.transform.position = new Vector3(0, -10, -1);
         }
 
 
-        if (cards.Count < 5)
+        if (cards.Count < 3)
         {
             foreach (PlayerManager player in players)
             {
-                if (player.streak > 10) SummonPl(player);
+                if (player.streak > 10 && players.Count > 1) SummonPl(player);
             }
 
-            if (FramesSinceLast == FrameTarget)
+            if (FramesSinceLast >= FrameTarget)
             {
                 SummonRand();
                 FramesSinceLast = 0;
@@ -76,8 +76,7 @@ public class BountyGen : MonoBehaviour
 
     void SummonRand()
     {
-
-        if(Intensity > 1F) //&& Random.value * Intensity > 0.75F)
+        if(/*players.Count > 1 && */Intensity >= 1F) //&& Random.value * Intensity > 0.75F)
         {
             int TotalStreaks = 0;
             foreach(PlayerManager player in players)
@@ -105,11 +104,9 @@ public class BountyGen : MonoBehaviour
     {
         GameObject card;
         card = Instantiate(CardPrefab, CardBoard.transform);
-        card.GetComponent<CardScript>().Face = target.mob.GetComponentInChildren<SpriteRenderer>().sprite;
+        card.GetComponent<CardScript>().AssignTarget(target.GetComponentInChildren<Mob>());
+        cards.Add(card.GetComponent<CardScript>());
 
-        float baseValue = Mathf.Max((target.streak * target.streak / 2), 4.5F);
-        int unInflatedValue = Mathf.RoundToInt(baseValue + Random.Range(-Mathf.Sqrt(baseValue), Mathf.Sqrt(baseValue) * Intensity));
-        card.GetComponent<CardScript>().Value = unInflatedValue * 1000;
     }
     void summonEn(EnemyMob target)
     {

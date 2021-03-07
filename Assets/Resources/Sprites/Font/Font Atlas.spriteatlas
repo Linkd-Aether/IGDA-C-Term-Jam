@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Font Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 21300000, guid: b8c86bfe16a5ee84db0922140dde9266, type: 3}
+    - {fileID: 21300000, guid: dedfb25529b051e42a4aa24a5b9155b6, type: 3}
+    - {fileID: 21300000, guid: 19099dd7230397948a7ebcaa55693468, type: 3}
+    - {fileID: 21300000, guid: 3b2ba9bf53c19e04baacbf2caed44576, type: 3}
+    - {fileID: 21300000, guid: 2d98d34f0f9a3db47a419243dea29214, type: 3}
+    - {fileID: 21300000, guid: bff784a5699ed714699b4df7c79289a9, type: 3}
+    - {fileID: 21300000, guid: cdc7af2af64cba948ad4699a39bd0dcc, type: 3}
+    - {fileID: 21300000, guid: 3e681b8e93ca566428236ccb4ec771c3, type: 3}
+    - {fileID: 21300000, guid: 8836707c024478f479006416c0e35405, type: 3}
+    - {fileID: 21300000, guid: 43e5c8a7c8f95a94e965af5942602b12, type: 3}
+    - {fileID: 21300000, guid: 2c102f22766f14e458a2384a58a481ee, type: 3}
+    - {fileID: 21300000, guid: 8705d916a945bb84f96e243f88810e5b, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 2c102f22766f14e458a2384a58a481ee, type: 3}
+  - {fileID: 21300000, guid: dedfb25529b051e42a4aa24a5b9155b6, type: 3}
+  - {fileID: 21300000, guid: bff784a5699ed714699b4df7c79289a9, type: 3}
+  - {fileID: 21300000, guid: 8705d916a945bb84f96e243f88810e5b, type: 3}
+  - {fileID: 21300000, guid: 43e5c8a7c8f95a94e965af5942602b12, type: 3}
+  - {fileID: 21300000, guid: 19099dd7230397948a7ebcaa55693468, type: 3}
+  - {fileID: 21300000, guid: cdc7af2af64cba948ad4699a39bd0dcc, type: 3}
+  - {fileID: 21300000, guid: 8836707c024478f479006416c0e35405, type: 3}
+  - {fileID: 21300000, guid: 3e681b8e93ca566428236ccb4ec771c3, type: 3}
+  - {fileID: 21300000, guid: b8c86bfe16a5ee84db0922140dde9266, type: 3}
+  - {fileID: 21300000, guid: 2d98d34f0f9a3db47a419243dea29214, type: 3}
+  - {fileID: 21300000, guid: 3b2ba9bf53c19e04baacbf2caed44576, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Font9
+  - Font0
+  - Font4
+  - FontX
+  - Font8
+  - Font1
+  - Font5
+  - Font7
+  - Font6
+  - Font$
+  - Font3
+  - Font2
+  m_Tag: Font Atlas
+  m_IsVariant: 0
