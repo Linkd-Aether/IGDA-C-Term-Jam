@@ -105,7 +105,7 @@ public class BountyGen : MonoBehaviour
     {
         GameObject card;
         card = Instantiate(CardPrefab, CardBoard.transform);
-        card.GetComponent<CardScript>().Face = target.playerMob.GetComponentInChildren<SpriteRenderer>().sprite;
+        card.GetComponent<CardScript>().Face = target.mob.GetComponentInChildren<SpriteRenderer>().sprite;
 
         float baseValue = Mathf.Max((target.streak * target.streak / 2), 4.5F);
         int unInflatedValue = Mathf.RoundToInt(baseValue + Random.Range(-Mathf.Sqrt(baseValue), Mathf.Sqrt(baseValue) * Intensity));
