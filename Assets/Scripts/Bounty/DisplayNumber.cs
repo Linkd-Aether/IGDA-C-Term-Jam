@@ -4,36 +4,19 @@ using UnityEngine;
 
 public class DisplayNumber : MonoBehaviour
 {
-    Sprite[] sprites = new Sprite[10];
-
-    public Sprite Font0;
-    public Sprite Font1;
-    public Sprite Font2;
-    public Sprite Font3;
-    public Sprite Font4;
-    public Sprite Font5;
-    public Sprite Font6;
-    public Sprite Font7;
-    public Sprite Font8;
-    public Sprite Font9;
+    static Sprite[] digitSprites;
 
     public Sprite FontX;
     public Sprite FontS;
 
 
-    private void Start()
+    private void Awake()
     {
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            string spriteName = $"Font{i}";
-            sprites[i] = (Sprite)Resources.Load($"Sprites/Font/{spriteName}", typeof(Sprite));
-        }
+        digitSprites = FontUtils.getDigitSprites();
     }
 
     private void Display(string toDisplay)
     {
-        if (sprites[0] != Font0) Start();
-
         char[] chars = toDisplay.ToCharArray();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -42,7 +25,7 @@ public class DisplayNumber : MonoBehaviour
             if (chars[i] == '$') transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = FontS;
             if (char.IsDigit(chars[i]))
             {
-                transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = sprites[int.Parse(char.ToString(chars[i]))];
+                transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = digitSprites[int.Parse(char.ToString(chars[i]))];
             }
         }
     }
