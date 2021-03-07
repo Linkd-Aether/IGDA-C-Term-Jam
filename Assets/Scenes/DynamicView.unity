@@ -49112,6 +49112,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4041284507850186811, guid: f44f9045123eefe47b1853b57f9a9f25,
+        type: 3}
+      propertyPath: camFramework
+      value: 
+      objectReference: {fileID: 2041665236}
     - target: {fileID: 4239028091124133609, guid: f44f9045123eefe47b1853b57f9a9f25,
         type: 3}
       propertyPath: m_LocalPosition.x
