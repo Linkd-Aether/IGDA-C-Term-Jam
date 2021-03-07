@@ -33,7 +33,7 @@ public class EnemyMob : Mob
         seeker = GetComponent<Seeker>();
         patrolPath = transform.parent.GetComponentInChildren<EnemyPath>();
 
-        ToPatrol();
+        StartCoroutine(InitPatrol());
     }
 
     private void FixedUpdate() {
@@ -70,6 +70,12 @@ public class EnemyMob : Mob
     }
 
     #region Pathfinding
+    private IEnumerator InitPatrol() {
+        yield return new WaitForSeconds(1f);
+        ToPatrol();
+        yield return null;
+    }
+
     // -> Combat State
     private void ToCombat(Transform player) {
         CancelInvoke();
@@ -83,6 +89,7 @@ public class EnemyMob : Mob
     // Find the next target for the enemy in Patrol State
     private void PatrolNextTarget() {
         target = patrolPath.nextNode();
+        Debug.Log($"target {target.gameObject.name} & {target.position}");
         UpdatePath();
     }
 
@@ -98,6 +105,7 @@ public class EnemyMob : Mob
     private void UpdatePath() {
         if (seeker.IsDone()) {
             seeker.StartPath(rb.position, target.position, PathFindComplete);
+            Debug.Log($"Start path to {target.gameObject.name}");
         }
     }
 

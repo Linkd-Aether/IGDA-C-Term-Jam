@@ -23,8 +23,6 @@ public class PlayerManager : MobManager
         streak = 0;
 
         playerCam = Camera.main;
-
-        spawned = true;
     }
 
     public void ConnectSpawner(Spawner spawner) {
