@@ -69,12 +69,6 @@ public class EnemyMob : Mob
         }
     }
 
-    protected override void MobDeath(Mob byDeath) {
-        base.MobDeath(byDeath);
-
-        transform.parent.GetComponentInChildren<EnemyManager>().DeathEnemyMob();
-    }
-
     #region Pathfinding
     // -> Combat State
     private void ToCombat(Transform player) {
@@ -118,8 +112,8 @@ public class EnemyMob : Mob
     // Search for all players while in Patrol State
     private void PlayersSearch() {
         foreach (PlayerManager playerManager in GameManager.playerManagers) {
-            if (playerManager.spawnedAndAlive) {
-                Transform player = playerManager.playerMob.transform;
+            if (playerManager.spawned && playerManager.mob.isAlive) {
+                Transform player = playerManager.mob.transform;
                 if (PlayerSearch(player)) ToCombat(player);
             }
         }

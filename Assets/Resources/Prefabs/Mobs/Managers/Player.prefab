@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09b0c6ca51230e049bfc2fa5a1ec2f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnedAndAlive: 1
+  spawned: 0
+  variant: 0
+  color: 0
+  mob: {fileID: 0}
   score: 0
   streak: 0
   playerCam: {fileID: 0}

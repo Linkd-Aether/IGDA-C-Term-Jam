@@ -13,6 +13,7 @@ abstract public class Mob : MonoBehaviour
     protected const float RECOIL = 100f;
     protected const int MAX_HEALTH = 3;
     protected const float BULLET_SPEED = 50f;
+    protected const float DEATH_TIME = 2f;
 
     // Variables
     public bool isAlive = true;
@@ -33,6 +34,8 @@ abstract public class Mob : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         LoadComponents();
+
+        
     }
 
     public void LoadComponents() {
@@ -72,6 +75,7 @@ abstract public class Mob : MonoBehaviour
         }
 
         isAlive = false;
+        GetComponentInParent<MobManager>().spawned = false;
         StartCoroutine(DestroyMob());
     }
 
@@ -79,28 +83,32 @@ abstract public class Mob : MonoBehaviour
     {
         float alpha = 1;
         while (alpha > 0) {
-            alpha -= Time.deltaTime;
+            alpha -= Time.deltaTime / DEATH_TIME;
             Color color = spriteRenderer.color;
             color.a = alpha;
             spriteRenderer.color = color;
             yield return new WaitForEndOfFrame();
         }
+        transform.parent.GetComponent<MobManager>().RespawnMob();
         Destroy(this.gameObject);
         yield return null;
+
     }
 
-    protected Quaternion AimDirToAngle() {
-        float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
-        return Quaternion.Euler(0, 0, aimAngle);
-    }
+    #region Utils
+        protected Quaternion AimDirToAngle() {
+            float aimAngle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
+            return Quaternion.Euler(0, 0, aimAngle);
+        }
 
-    public void SetColor(Color color) {
-        spriteRenderer.color = color;
-    }
+        public void SetColor(Color color) {
+            spriteRenderer.color = color;
+        }
 
-    public void SetAlpha(float alpha) {
-        Color color = spriteRenderer.color;
-        color.a = alpha;
-        spriteRenderer.color = color;
-    }
+        public void SetAlpha(float alpha) {
+            Color color = spriteRenderer.color;
+            color.a = alpha;
+            spriteRenderer.color = color;
+        }
+    #endregion
 }

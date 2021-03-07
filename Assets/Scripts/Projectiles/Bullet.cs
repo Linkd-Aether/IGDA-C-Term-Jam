@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
                 if (shooter != collision.collider) {
                     // A Mob was hit
                     Mob mob = collision.collider.GetComponent<Mob>();
-                    mob.LoseHealth(shooter);
+                    if (mob.isAlive) mob.LoseHealth(shooter);
                 }
             }
             Hit();
