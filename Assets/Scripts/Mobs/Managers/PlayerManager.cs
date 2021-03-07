@@ -28,6 +28,7 @@ public class PlayerManager : MobManager
     {
         UpdateScore(reward);
         IncrementStreak();
+        GetComponentInParent<GameManager>().TestWin(score);
     }
 
     public void ConnectUIManager(UICanvasManager canvasManager) {

@@ -85,6 +85,8 @@ public class PlayerMob : Mob
         // play bullet SE with pitch based on dash !!!
         if (dashing) StartCoroutine(EndDash());
 
+        GameManager.win = true;
+
         return bullet;
     }
 
