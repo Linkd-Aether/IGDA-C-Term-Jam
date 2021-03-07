@@ -44,7 +44,14 @@ public class Spawner : MonoBehaviour
         mob.enabled = false;
         mob.LoadComponents();
 
-        if (mob is PlayerMob) AudioManager.PlaySound("Teleport");
+        if (mob is PlayerMob) {
+            AudioManager.PlaySound("Teleport");
+            Transform aim = mob.transform.Find("PlayerAim");
+            SpriteRenderer spr = aim.GetComponent<SpriteRenderer>();
+            Color temp = COLORS[color];
+            temp.a = spr.color.a;
+            spr.color = temp;
+        }
 
         if (changes) SetStyle();
 
