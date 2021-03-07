@@ -10,9 +10,14 @@ public class UICanvasManager : MonoBehaviour
     static private Vector3 HEALTH_UI_ORIGIN;
     static private Vector3 STREAK_UI_ORIGIN;
     static private Vector3 SCORE_UI_ORIGIN;
-
     static private float[] SCALAR = new float[3] { 1, .75f, .5f };
+    static private float HEALTH_FADE_TIME = .5f;
+    static private float HEALTH_FADE_ALPHA = .4f;
+    
+    // Variables
     private int playerValue;
+    private int healthDisplayed = 0;
+    private int healthTarget; // 0-3 for number of health
 
     // Components
     private RectTransform healthUI;
@@ -32,13 +37,17 @@ public class UICanvasManager : MonoBehaviour
     public void SetPlayer(int value) {
         playerValue = value;
         GameManager.playerManagers[playerValue].ConnectUIManager(this);
-        InitLayer(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"));
+        InitComponents(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"), GameManager.GetColor(playerValue));
     }
 
-    private void InitLayer(GameObject obj, int layer) {
+    private void InitComponents(GameObject obj, int layer, Color color) {
         obj.layer = layer;
+
+        SpriteRenderer spr = obj.GetComponent<SpriteRenderer>();
+        if (spr != null) spr.color = color;
+
         foreach (Transform child in obj.transform) {
-            InitLayer(child.gameObject, layer);
+            InitComponents(child.gameObject, layer, color);
         }
     }
 
@@ -55,7 +64,23 @@ public class UICanvasManager : MonoBehaviour
         }
 
         public void UpdateHealth(int health) {
-            
+            healthTarget = health;
+            if (healthTarget < healthDisplayed) {
+                // lose health
+                SpriteRenderer target = healthUI.GetComponentsInChildren<SpriteRenderer>()[healthDisplayed - 1];
+                StartCoroutine(HealthFade(HEALTH_FADE_ALPHA, target));
+                healthDisplayed--;
+            } else if (healthTarget > healthDisplayed) {
+                // gain health
+                SpriteRenderer target = healthUI.GetComponentsInChildren<SpriteRenderer>()[healthDisplayed];
+                StartCoroutine(HealthFade(1, target));
+                healthDisplayed++;
+            }
+        }
+
+        private IEnumerator HealthFade(float targetAlpha, SpriteRenderer spriteRenderer) {
+            yield return StartCoroutine(Utils.FadeLerp(HEALTH_FADE_TIME, targetAlpha, spriteRenderer));
+            UpdateHealth(healthTarget);
         }
     #endregion
 
