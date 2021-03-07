@@ -76,7 +76,6 @@ static public class AudioLoader
 
     static private AudioClip SelectRandomFrom(List<AudioClip> clips) {
         int select = Random.Range(0, clips.Count);
-        Debug.Log(select);
         return clips[select];
     }
 

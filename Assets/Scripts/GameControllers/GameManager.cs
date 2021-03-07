@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
         enemyList = transform.Find("Enemies");
 
         spawners = playerList.GetComponentsInChildren<Spawner>();
-        foreach (Spawner spawner in spawners) {
-            spawner.FixStyleForPlayer();
+        for (int i = 0; i < 4; i++) {
+            spawners[i].FixStyleForPlayer(i);
         }
     }
 
@@ -52,6 +52,5 @@ public class GameManager : MonoBehaviour
 
     static public Color GetColor(int player) {
         return Spawner.COLORS[spawners[player].color];
-
     }
 }

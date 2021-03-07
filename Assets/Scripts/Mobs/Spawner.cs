@@ -55,8 +55,19 @@ public class Spawner : MonoBehaviour
         return mob;
     }
 
-    public void FixStyleForPlayer() {
-        SetStyle();
+    public void FixStyleForPlayer(int playerValue) {
+        bool uniqueColor = false;
+        while (!uniqueColor) {
+            SetStyle();
+            uniqueColor = true;
+            for (int i = 0; i < playerValue; i++) {
+                if (GameManager.GetColor(i) == COLORS[color]) {
+                    Debug.Log($"Player {i} and {playerValue} had {color}");
+                    uniqueColor = false;
+                }
+            }
+        }
+
         Color spawnerColor = COLORS[color];
         spawnerColor.a = SPAWNER_ALPHA;
         GetComponent<SpriteRenderer>().color = spawnerColor;
@@ -75,7 +86,6 @@ public class Spawner : MonoBehaviour
 
     public void SetExistence(bool exists) {
         if (changes) {
-            // Debug.Log($"V{variant}, C{color}, {exists}");
             existingMobs[variant,color] = exists;
         }
     }
