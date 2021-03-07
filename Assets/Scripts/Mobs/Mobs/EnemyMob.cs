@@ -10,8 +10,8 @@ public class EnemyMob : Mob
     private enum State { Patrol, Combat };
 
     const float SHOT_COOLDOWN_OFFSET = 2f;
-    const float MAX_VISION_DIST = 12f;
-    const float MAX_CHASE_DIST = 20f;
+    const float MAX_VISION_DIST = 4.5f;
+    const float MAX_CHASE_DIST = 6f;
     
     // Variables
     private int currentWaypoint = 0;

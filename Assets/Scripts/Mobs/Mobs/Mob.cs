@@ -87,7 +87,7 @@ abstract public class Mob : FXobject
 
             } else if (deadBy is EnemyMob) {
                 int bountyIndex = BountyGen.GetCards().FindIndex(c => c.Target.Equals(GetComponent<Mob>()));
-                BountyGen.ClaimCard(bountyIndex);
+                if(bountyIndex != -1) BountyGen.ClaimCard(bountyIndex);
                 EnemyMob enemy = (EnemyMob) deadBy;
                 enemy.ToPatrol();
             }
