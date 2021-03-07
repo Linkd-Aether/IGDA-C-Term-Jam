@@ -25,7 +25,7 @@ public class CamFramework : MonoBehaviour
         {
             GameObject tempCam = Instantiate(dynCamPrefab, transform);
             tempCam.GetComponent<DynCam>().player = players[i - 1];
-            players[i - 1].playerCam = tempCam;
+            players[i - 1].playerCam = tempCam.GetComponent<Camera>();
         }
 
         if(players.Count == 1)
