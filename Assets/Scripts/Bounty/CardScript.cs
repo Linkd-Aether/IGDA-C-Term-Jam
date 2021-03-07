@@ -34,7 +34,7 @@ public class CardScript : MonoBehaviour
         target = newTarget;
         if (newTarget is PlayerMob)
         {
-            Face = target.GetComponentInChildren<SpriteRenderer>().sprite;
+            Face = target.spriteRenderer.sprite;
 
             int streak = target.GetComponentInParent<PlayerManager>().streak;
             float baseValue = Mathf.Max((streak * streak / 2), 4.5F);

@@ -41,14 +41,12 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 8836707c024478f479006416c0e35405, type: 3}
     - {fileID: 21300000, guid: 43e5c8a7c8f95a94e965af5942602b12, type: 3}
     - {fileID: 21300000, guid: 2c102f22766f14e458a2384a58a481ee, type: 3}
-    - {fileID: 21300000, guid: 8705d916a945bb84f96e243f88810e5b, type: 3}
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 2c102f22766f14e458a2384a58a481ee, type: 3}
   - {fileID: 21300000, guid: dedfb25529b051e42a4aa24a5b9155b6, type: 3}
   - {fileID: 21300000, guid: bff784a5699ed714699b4df7c79289a9, type: 3}
-  - {fileID: 21300000, guid: 8705d916a945bb84f96e243f88810e5b, type: 3}
   - {fileID: 21300000, guid: 43e5c8a7c8f95a94e965af5942602b12, type: 3}
   - {fileID: 21300000, guid: 19099dd7230397948a7ebcaa55693468, type: 3}
   - {fileID: 21300000, guid: cdc7af2af64cba948ad4699a39bd0dcc, type: 3}
@@ -61,7 +59,6 @@ SpriteAtlas:
   - Font9
   - Font0
   - Font4
-  - FontX
   - Font8
   - Font1
   - Font5
