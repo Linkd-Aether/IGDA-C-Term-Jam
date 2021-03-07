@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviour
     // Components & References
     static public List<PlayerManager> playerManagers { get; private set; }
 
+    static private int WIN_SCORE = 100000;
+    
     static private Spawner[] spawners;
     static private Transform playerList;
+
     static private Transform enemyList;
 
     public CamFramework camFramework; // Shouldn't be public but is for now !!!
@@ -41,7 +44,13 @@ public class GameManager : MonoBehaviour
         return enemyList.GetComponentsInChildren<EnemyManager>();
     }
 
+    static public void TestWin(int score)
+    {
+        if (score > WIN_SCORE) ;
+    }
+
     static public Color GetColor(int player) {
         return Spawner.COLORS[spawners[player].color];
+
     }
 }
