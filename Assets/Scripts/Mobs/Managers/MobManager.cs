@@ -18,24 +18,23 @@ abstract public class MobManager : MonoBehaviour
 
     // Components & References
     public Mob mob;
-    private Spawner spawner;
+    public Spawner spawner;
 
     protected virtual void Awake() {
-        mob = GetComponentInChildren<Mob>();
         spawner = GetComponentInChildren<Spawner>();
-        mob.transform.position = spawner.transform.position;
+        StartCoroutine(SpawnMob(1f));
     }
 
     #region Spawning & Death
         public virtual void RespawnMob() {
-            StartCoroutine(SpawnMob());
+            StartCoroutine(SpawnMob(respawnWait));
         }
 
         // Spawn Mob with raising alpha value
-        protected IEnumerator SpawnMob() {
-            yield return new WaitForSeconds(respawnWait);
+        protected IEnumerator SpawnMob(float delay) {
+            yield return new WaitForSeconds(delay);
 
-            Mob mob = CreateMob();
+            mob = spawner.CreateMob(mobPrefab);
 
             spawned = true;
             mob.enabled = true;
@@ -49,27 +48,6 @@ abstract public class MobManager : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
 
-            yield return StartCoroutine(MobSpawned());
-        }
-
-        // Instantiate a Mob Prefab at the given location
-        private Mob CreateMob() {
-            GameObject mobObj = Instantiate(mobPrefab);
-            mobObj.transform.parent = transform;
-            mobObj.transform.position = spawner.transform.position;
-            mobObj.transform.localScale = Vector3.one;
-            
-            mob = mobObj.GetComponent<Mob>();
-            mob.isAlive = false;
-            mob.enabled = false;
-            mob.LoadComponents();
-            // mob.SetColor();
-            mob.SetAlpha(0);
-
-            return mob;
-        }
-
-        protected virtual IEnumerator MobSpawned() {
             mob.isAlive = true;
             mob.GetComponent<Collider2D>().enabled = true;
             yield return null;

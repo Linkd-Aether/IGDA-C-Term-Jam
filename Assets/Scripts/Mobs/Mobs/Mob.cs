@@ -34,8 +34,6 @@ abstract public class Mob : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         LoadComponents();
-
-
     }
 
     public void LoadComponents() {
@@ -90,7 +88,11 @@ abstract public class Mob : MonoBehaviour
             spriteRenderer.color = color;
             yield return new WaitForEndOfFrame();
         }
-        transform.parent.GetComponent<MobManager>().RespawnMob();
+        MobManager mobManager = transform.parent.GetComponent<MobManager>();
+
+        mobManager.RespawnMob();
+        mobManager.spawner.SetExistence(false);
+
         Destroy(this.gameObject);
         yield return null;
 
@@ -110,6 +112,10 @@ abstract public class Mob : MonoBehaviour
             Color color = spriteRenderer.color;
             color.a = alpha;
             spriteRenderer.color = color;
+        }
+
+        public void SetSprite(Sprite sprite) {
+            spriteRenderer.sprite = sprite;
         }
     #endregion
 }

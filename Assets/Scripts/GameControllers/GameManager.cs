@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
-{
+{   
     // Components & References
     static public List<PlayerManager> playerManagers { get; private set; }
 
@@ -16,9 +16,13 @@ public class GameManager : MonoBehaviour
     private void Start() {
         playerManagers = new List<PlayerManager>();
 
-        spawners = GetComponentsInChildren<Spawner>();
         playerList = transform.Find("Players");
         enemyList = transform.Find("Enemies");
+
+        spawners = playerList.GetComponentsInChildren<Spawner>();
+        foreach (Spawner spawner in spawners) {
+            spawner.FixStyleForPlayer();
+        }
     }
 
     private void OnPlayerJoined(PlayerInput playerInput) {
