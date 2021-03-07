@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private Spawner[] spawners;
     private Transform playerList;
-    private Transform enemyList;
+    static private Transform enemyList;
 
     public CamFramework camFramework; // Shouldn't be public but is for now !!!
 
@@ -34,5 +34,10 @@ public class GameManager : MonoBehaviour
         playerManagers.Add(player);
         player.gameObject.name = $"Player {playerManagers.Count}";
         camFramework.AddCamera();
+    }
+
+    static public EnemyManager[] GetEnemies()
+    {
+        return enemyList.GetComponentsInChildren<EnemyManager>();
     }
 }

@@ -19,7 +19,6 @@ public class DisplayNumber : MonoBehaviour
     {
         char[] chars = toDisplay.ToCharArray();
 
-        //Debug.Log("numch = " + transform.childCount);
         for (int i = 0; i < transform.childCount; i++)
         {
             if (chars[i] == 'x') transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = FontX;
@@ -37,7 +36,6 @@ public class DisplayNumber : MonoBehaviour
         for (int i = 0; i < transform.childCount - 1 - value.ToString().Length; i++)
             toDisplay += " ";
         toDisplay += "$" + value.ToString();
-        Debug.Log("\""+toDisplay+ "\"");
         Display(toDisplay);
     }
 

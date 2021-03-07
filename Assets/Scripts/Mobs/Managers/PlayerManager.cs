@@ -24,6 +24,11 @@ public class PlayerManager : MobManager
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }
+    public void TakeBounty(int reward)
+    {
+        score += reward;
+        streak++;
+    }
 
     public void ConnectUIManager(UICanvasManager canvasManager) {
         uiManager = canvasManager;

@@ -75,9 +75,19 @@ abstract public class Mob : FXobject
 
         protected virtual void MobDeath(Mob deadBy) {
             if (deadBy is PlayerMob) {
-                // Check for bounty, have deadBy claim it if it exists !!!
+                // Check for bounty, have deadBy claim it if it exists
+                int bountyIndex = BountyGen.GetCards().FindIndex(c => c.Target.Equals(GetComponent<Mob>()));
+                bool eligible = true;
+                if (bountyIndex != -1)
+                {
+                    if (deadBy.Equals(BountyGen.GetCards()[bountyIndex].Target)) eligible = false;
+                    int reward = BountyGen.ClaimCard(bountyIndex);
+                    if(eligible)deadBy.GetComponentInParent<PlayerManager>().TakeBounty(reward);
+                }
+
             } else if (deadBy is EnemyMob) {
-                // Check for bounty, erase bounty if it exists !!!
+                int bountyIndex = BountyGen.GetCards().FindIndex(c => c.Target.Equals(GetComponent<Mob>()));
+                BountyGen.ClaimCard(bountyIndex);
                 EnemyMob enemy = (EnemyMob) deadBy;
                 enemy.ToPatrol();
             }
