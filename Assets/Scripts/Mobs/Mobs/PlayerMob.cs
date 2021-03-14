@@ -31,7 +31,6 @@ public class PlayerMob : Mob
     // Components & References
     private Transform playerAim;
     private SpriteRenderer dashFX = null;
-    private ParticleSystem.EmissionModule particleEmissions;
 
 
     private void Awake() {
@@ -40,7 +39,6 @@ public class PlayerMob : Mob
                 playerAim = child;
             }
         }
-        particleEmissions = GetComponent<ParticleSystem>().emission;
     }
 
     protected override void Start()

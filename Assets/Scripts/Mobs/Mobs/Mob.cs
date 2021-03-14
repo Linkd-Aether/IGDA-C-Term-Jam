@@ -30,6 +30,7 @@ abstract public class Mob : FXobject
 
     // Components & References
     protected Rigidbody2D rb;
+    protected ParticleSystem.EmissionModule particleEmissions;
 
 
     protected override void Start()
@@ -40,6 +41,7 @@ abstract public class Mob : FXobject
         dashReflectPrefab = (GameObject) Resources.Load("Prefabs/Projectiles/DashReflect");
 
         rb = GetComponent<Rigidbody2D>();
+        particleEmissions = GetComponent<ParticleSystem>().emission;
         LoadComponents();
     }
 

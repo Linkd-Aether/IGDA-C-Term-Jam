@@ -22,18 +22,23 @@ public class CardScript : MonoBehaviour
     void Start()
     {
         transform.localPosition = new Vector2(0, -7);
-        TargetPos = 10.25F - (Position * 3.25F);
-        TargetVect = new Vector2(0, transform.localPosition.y + TargetPos);
+        UpdatePosition(Position);
+        Debug.Log(Position);
 
         //CardBorder = GetComponent<SpriteRenderer>().sprite;
         CardBorder1 = (Sprite)Resources.Load($"Sprites/BountyCards/BountyCardFinalized", typeof(Sprite));
         CardBorder2 = (Sprite)Resources.Load($"Sprites/BountyCards/BountyCardFinalized2", typeof(Sprite));
 
-
         Claimed = false;
 
         CreateCard();
         AudioManager.PlaySound("BountyPost");
+    }
+
+    public void UpdatePosition(int posNum) {
+        Position = posNum;
+        TargetPos = 3.25F - (Position * 3.25F);
+        TargetVect = new Vector2(0, TargetPos);
     }
 
     // Update is called once per frame
