@@ -5,6 +5,12 @@ using UnityEngine;
 public class PlayerMob : Mob
 {
     // Constants
+    const float MAX_SHOT_CHARGE = 2.5f;
+    const float MAX_SHOT_FLASH_TIME = 0.25f;
+    const float MIN_SHOT_FLASH_TIME = 0.15f;
+    const float MAX_SHOT_FLASH_ALPHA = 0.4f;
+    const float MIN_SHOT_FLASH_ALPHA = 0.25f;
+    const float FULL_CHARGE_ALPHA = 0.75f;
     const float DASH_MOD = 6f;
     const float DASH_BULLET_MOD = 1.5f;
     const float DASH_MAX_TIME = .35f;
@@ -16,6 +22,7 @@ public class PlayerMob : Mob
 
     // Variables
     private Vector2 moveInput = Vector2.zero;
+    private float chargeTime = 0f;
     private bool dashing = false;
     private float dashTime = 0f;
     private float dashCooldown = 0f;
@@ -61,12 +68,9 @@ public class PlayerMob : Mob
             }
             rb.AddForce(force);
 
-            // Shooting
+            // Shooting Charge & Cooldown
             if (shoot) {
-                if (shotCooldown <= 0) {
-                    SpawnProjectile();
-                    shotCooldown = SHOT_COOLDOWN;
-                }
+                chargeTime += Time.fixedDeltaTime;
             }
             if (shotCooldown > 0) {
                 shotCooldown -= Time.fixedDeltaTime;
@@ -78,13 +82,27 @@ public class PlayerMob : Mob
     protected override Bullet SpawnProjectile() {
         Bullet bullet = base.SpawnProjectile();
 
-        float modifier = dashing ? DASH_BULLET_MOD : 1;
-        bullet.speed *= modifier;
+        float modifier = Mathf.Min(chargeTime, MAX_SHOT_CHARGE);
+        bullet.speed += bullet.speed * modifier;
+        bullet.transform.localScale += bullet.transform.localScale * modifier / 2;
 
         rb.AddForce(-aimDir * RECOIL * modifier);
-        if (dashing) StartCoroutine(EndDash());
 
         return bullet;
+    }
+
+    private IEnumerator ChargingEffect() {
+        yield return new WaitForSeconds(.1f);
+        if (shoot) {
+            float percentThroughCharge = Mathf.Min(chargeTime, MAX_SHOT_CHARGE) / MAX_SHOT_CHARGE;
+            bool fullCharge = (percentThroughCharge == 1);
+            float flashTime = Mathf.Lerp(MIN_SHOT_FLASH_TIME, MAX_SHOT_FLASH_TIME, percentThroughCharge);
+            float targetAlpha = Mathf.Lerp(MIN_SHOT_FLASH_ALPHA, MAX_SHOT_FLASH_ALPHA, percentThroughCharge);
+            if (fullCharge) targetAlpha = FULL_CHARGE_ALPHA;
+            yield return StartCoroutine(ColorFlash(WHITE, flashTime, targetAlpha));
+            yield return StartCoroutine(ColorFlash(WHITE, flashTime, 0));
+            StartCoroutine(ChargingEffect());
+        }
     }
 
     private IEnumerator EndDash() {
@@ -110,8 +128,20 @@ public class PlayerMob : Mob
             moveInput = input;
         }
 
-        public void SetShooting() {
-            shoot = !shoot;
+        public void SetShooting(bool isPressed) {
+            if (isPressed) { // this was a press, start a shot charge
+                shoot = true;
+                chargeTime = 0f;
+                StartCoroutine(ChargingEffect());
+            } else { // this was a release, release the shot
+                if (shoot) {
+                    if (shotCooldown <= 0){
+                        SpawnProjectile();
+                        shotCooldown = SHOT_COOLDOWN;
+                    }
+                    shoot = false;
+                } 
+            }
         }
 
         public void SetDash() {

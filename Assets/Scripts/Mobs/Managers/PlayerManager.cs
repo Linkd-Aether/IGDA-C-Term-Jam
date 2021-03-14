@@ -78,7 +78,7 @@ public class PlayerManager : MobManager
         // A, B, Right Trigger, or Left Mouse (Button)
         private void OnShoot(InputValue value) {
             if (spawned && mob.isAlive) {
-                ((PlayerMob) mob).SetShooting();
+                ((PlayerMob) mob).SetShooting(value.isPressed);
             }
         }
 
