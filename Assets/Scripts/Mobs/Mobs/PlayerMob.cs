@@ -30,8 +30,8 @@ public class PlayerMob : Mob
 
     // Components & References
     private Transform playerAim;
-
-    ParticleSystem.EmissionModule particleEmissions;
+    private SpriteRenderer dashFX = null;
+    private ParticleSystem.EmissionModule particleEmissions;
 
 
     private void Awake() {
@@ -40,6 +40,7 @@ public class PlayerMob : Mob
                 playerAim = child;
             }
         }
+        particleEmissions = GetComponent<ParticleSystem>().emission;
     }
 
     protected override void Start()
@@ -51,7 +52,6 @@ public class PlayerMob : Mob
     }
 
     private void FixedUpdate() {
-        particleEmissions = GetComponent<ParticleSystem>().emission;
         particleEmissions.enabled = isBounty;
         if (isAlive) {
             // Movement
@@ -107,7 +107,8 @@ public class PlayerMob : Mob
 
     private IEnumerator EndDash() {
         dashing = false;
-        yield return StartCoroutine(AlphaLerpFX(DASH_CHANGE_TIME, 0));
+        yield return StartCoroutine(AlphaLerpFX(dashFX, DASH_CHANGE_TIME, 0));
+        Destroy(dashFX.gameObject);
         isImmune = false;
     }
 
@@ -150,10 +151,10 @@ public class PlayerMob : Mob
                 dashTime = 0f;
                 dashCooldown = DASH_COOLDOWN;
                 lastDashCoordinate = transform.position;
-                
                 isImmune = true;
-                spriteOverlay.color = BLACK;
-                StartCoroutine(AlphaLerpFX(DASH_CHANGE_TIME, DASH_DARKEN_FX));
+
+                dashFX = CreateFXLayer(BLACK);
+                StartCoroutine(AlphaLerpFX(dashFX, DASH_CHANGE_TIME, DASH_DARKEN_FX));
             }
         }
 
