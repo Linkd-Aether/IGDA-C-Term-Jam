@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2758719151038589428}
   - component: {fileID: 3697489905008491009}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DashReflectGFX
   m_TagString: GFX
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5043904276140023935}
   - component: {fileID: 6318142883290593668}
   - component: {fileID: 326229696679755784}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DashReflect
   m_TagString: Reflector
   m_Icon: {fileID: 0}

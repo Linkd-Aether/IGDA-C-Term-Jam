@@ -45,10 +45,10 @@ public class GameManager : MonoBehaviour
         return enemyList.GetComponentsInChildren<EnemyManager>();
     }
 
-    static public void TestWin(int score)
-    {
-        if (score > WIN_SCORE) ;
-    }
+    // static public void TestWin(int score)
+    // {
+    //     if (score > WIN_SCORE) ;
+    // }
 
     static public Color GetColor(int player) {
         return Spawner.COLORS[spawners[player].color];

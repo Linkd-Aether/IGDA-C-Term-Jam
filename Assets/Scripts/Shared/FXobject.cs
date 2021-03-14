@@ -4,51 +4,61 @@ using UnityEngine;
 
 public abstract class FXobject : GFXobject
 {
+    static private GameObject FXLayer;
+
     static protected Color BLACK = new Color(0,0,0,0);
     static protected Color RED = new Color(165/255f,0,0,0);
     static protected Color WHITE = new Color(1,1,1,0);
 
-    public SpriteRenderer spriteOverlay;
+    static private float FX_RADIUS = .53f;
 
-    private void SetAlphaFX(float alpha) {
-        Color color = spriteOverlay.color;
-        color.a = alpha;
-        spriteOverlay.color = color;
+
+    protected override void Start() {
+        base.Start();
+        FXLayer = (GameObject) Resources.Load("Prefabs/Mobs/Mobs/FXLayer");
     }
 
-    public override void LoadComponents() {
-        base.LoadComponents();
 
-        foreach (Transform child in transform) {
-            if (child.tag == "FX") {
-                spriteOverlay = child.GetComponent<SpriteRenderer>();
-            }
-        }
-        SetAlphaFX(0);
+    private void SetAlphaFX(SpriteRenderer FXRenderer, float alpha) {
+        Color color = FXRenderer.color;
+        color.a = alpha;
+        FXRenderer.color = color;
+    }
+
+    protected SpriteRenderer CreateFXLayer(Color color) {
+        GameObject FXLayerObj = Instantiate(FXLayer);
+        FXLayerObj.transform.parent = this.transform;
+        FXLayerObj.transform.localPosition = Vector3.zero;
+        FXLayerObj.transform.localScale = Vector3.one * FX_RADIUS;
+
+        SpriteRenderer FXRenderer = FXLayerObj.GetComponent<SpriteRenderer>();
+        FXRenderer.color = color;
+        SetAlphaFX(FXRenderer, 0);
+
+        return FXRenderer;
     }
 
     #region FX Tools
         protected IEnumerator ColorFlash(Color color, float fadeTime, float targetAlpha) {
-            spriteOverlay.color = color;
+            SpriteRenderer FXRenderer = CreateFXLayer(color);
 
-            yield return StartCoroutine(AlphaLerpFX(fadeTime, targetAlpha));
+            yield return StartCoroutine(AlphaLerpFX(FXRenderer, fadeTime, targetAlpha));
             yield return new WaitForEndOfFrame();
-            yield return StartCoroutine(AlphaLerpFX(fadeTime, 0));
-            yield return null;
+            yield return StartCoroutine(AlphaLerpFX(FXRenderer, fadeTime, 0));
+            Destroy(FXRenderer.gameObject);
         }
 
-        protected IEnumerator AlphaLerpFX(float fadeTime, float targetAlpha) {
-            float startingAlpha = spriteOverlay.color.a;
+        protected IEnumerator AlphaLerpFX(SpriteRenderer FXRenderer, float fadeTime, float targetAlpha) {
+            float startingAlpha = FXRenderer.color.a;
             float lerpT = 0;
 
             while (lerpT < 1) {
                 lerpT += Time.deltaTime / fadeTime;
                 lerpT = Mathf.Clamp(lerpT, 0, 1);
                 float alpha = Mathf.Lerp(startingAlpha, targetAlpha, lerpT);
-                SetAlphaFX(alpha);
+                SetAlphaFX(FXRenderer, alpha);
                 yield return new WaitForEndOfFrame();
             }
-            yield return null;
         }
     #endregion
 }

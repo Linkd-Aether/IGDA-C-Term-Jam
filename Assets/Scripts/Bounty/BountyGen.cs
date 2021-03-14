@@ -74,12 +74,13 @@ public class BountyGen : MonoBehaviour
         }
 
         //Update the position of the cards on the board
+        int positioning = 0;
         for(int i = 0; i < cards.Count; i++)
         {
             CardScript ComponentTemp = cards[i];
-            if(ComponentTemp != null)
-            {
-                ComponentTemp.Position = i;
+            if(ComponentTemp != null) {
+                ComponentTemp.UpdatePosition(positioning);
+                positioning++;
             }
         }
     }

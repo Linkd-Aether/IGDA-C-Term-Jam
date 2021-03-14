@@ -26,7 +26,6 @@ public class EnemyMob : Mob
     private EnemyPath patrolPath;
     private Transform target;
 
-    ParticleSystem.EmissionModule particleEmissions;
 
     protected override void Start()
     {
@@ -38,7 +37,6 @@ public class EnemyMob : Mob
     }
 
     private void FixedUpdate() {
-        particleEmissions = GetComponent<ParticleSystem>().emission;
         particleEmissions.enabled = isBounty;
         if (isAlive) {
             if (state == State.Combat) {
