@@ -69,7 +69,6 @@ public class Spawner : MonoBehaviour
             uniqueColor = true;
             for (int i = 0; i < playerValue; i++) {
                 if (GameManager.GetColor(i) == COLORS[color]) {
-                    Debug.Log($"Player {i} and {playerValue} had {color}");
                     uniqueColor = false;
                 }
             }
