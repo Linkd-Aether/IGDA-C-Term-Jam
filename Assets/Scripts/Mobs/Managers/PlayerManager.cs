@@ -21,6 +21,26 @@ public class PlayerManager : MobManager
         respawnWait = 5f;
     }
 
+
+    public bool loseHealth;
+    public bool streakUp;
+    public bool addscore;
+    private void Update() {
+        if (loseHealth) {
+            mob.LoseHealth(mob);
+            loseHealth = false;
+        }
+        if (streakUp) {
+            IncrementStreak();
+            streakUp = false;
+        }
+        if (addscore) {
+            UpdateScore(10000);
+            addscore = false;
+        }
+    }
+
+
     public void ConnectSpawner(Spawner spawner) {
         spawner.transform.parent = transform;
     }

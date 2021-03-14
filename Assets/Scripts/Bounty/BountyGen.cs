@@ -79,7 +79,6 @@ public class BountyGen : MonoBehaviour
         {
             CardScript ComponentTemp = cards[i];
             if(ComponentTemp != null) {
-                Debug.Log("Here!");
                 ComponentTemp.UpdatePosition(positioning);
                 positioning++;
             }

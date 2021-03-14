@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     private const float PITCH_CHANGE_RATE = .05f;
     private const float PITCH_MIN = .85f;
     private const float PITCH_MAX = 1.15f;
+    private const float SCORE_TO_INTENSITY = 10000f;
+    private const int SCORE_ONLY_INTENSITY_MAX = 6;
+    private const int INTENSITY_MAX = 8;
 
     // Variables
     static private int intensity = 1;
@@ -32,17 +35,23 @@ public class AudioManager : MonoBehaviour
 
     public void UpdateIntensity() {
         int streakMax = 1;
+        int scoreMax = 0;
         foreach (PlayerManager player in GameManager.playerManagers) {
             streakMax = Mathf.Max(streakMax, player.streak);
+            scoreMax = Mathf.Max(scoreMax, player.score);
         }
         
         if (intensity != streakMax) {
-            float intensityFactor = (float) (streakMax - 1) / 8;
+            int lowerBound = (int) Mathf.Floor(scoreMax / SCORE_TO_INTENSITY);
+            lowerBound = Mathf.Min(lowerBound, SCORE_ONLY_INTENSITY_MAX);
+            int intensityFactor = streakMax - 1 + lowerBound;
+            intensityFactor = Mathf.Min(intensityFactor, INTENSITY_MAX);
+            float intensityModifier = (float) intensityFactor / 8;
 
-            float targPitch = (PITCH_MAX - PITCH_MIN) * intensityFactor + PITCH_MIN;
+            float targPitch = (PITCH_MAX - PITCH_MIN) * intensityModifier + PITCH_MIN;
             ChangePitch(targPitch);
 
-            float targVolume = (VOLUME_MAX - VOLUME_MIN) * intensityFactor + VOLUME_MIN;
+            float targVolume = (VOLUME_MAX - VOLUME_MIN) * intensityModifier + VOLUME_MIN;
             ChangeVolume(targVolume);
 
             intensity = streakMax;

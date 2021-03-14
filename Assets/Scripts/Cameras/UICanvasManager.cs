@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class UICanvasManager : MonoBehaviour
 {
     // Constants
+    static private float UI_ALPHA = 0.5f;
     static private Vector3 HEALTH_UI_ORIGIN;
     static private Vector3 STREAK_UI_ORIGIN;
     static private Vector3 SCORE_UI_ORIGIN;
     static private float[] SCALAR = new float[3] { 1, .75f, .5f };
     static private float HEALTH_FADE_TIME = .5f;
-    static private float HEALTH_FADE_ALPHA = .4f;
+    static private float HEALTH_FADE_ALPHA = .25f;
     static private int SCORE_RAISE_SPEED = 5000;
     
     // Variables
@@ -40,7 +41,9 @@ public class UICanvasManager : MonoBehaviour
     public void SetPlayer(int value) {
         playerValue = value;
         GameManager.playerManagers[playerValue].ConnectUIManager(this);
-        InitComponents(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"), GameManager.GetColor(playerValue));
+        Color UIcolor = GameManager.GetColor(playerValue);
+        UIcolor.a = UI_ALPHA;
+        InitComponents(gameObject, LayerMask.NameToLayer($"UILayer{playerValue}"), UIcolor);
     }
 
     private void InitComponents(GameObject obj, int layer, Color color) {
@@ -100,7 +103,7 @@ public class UICanvasManager : MonoBehaviour
             } else if (healthTarget > healthDisplayed) {
                 // gain health
                 SpriteRenderer target = healthUI.GetComponentsInChildren<SpriteRenderer>()[healthDisplayed];
-                StartCoroutine(HealthFade(1, target));
+                StartCoroutine(HealthFade(UI_ALPHA + .25f, target));
                 healthDisplayed++;
             }
         }

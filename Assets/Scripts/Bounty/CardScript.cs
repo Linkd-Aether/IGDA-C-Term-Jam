@@ -23,7 +23,6 @@ public class CardScript : MonoBehaviour
     {
         transform.localPosition = new Vector2(0, -7);
         UpdatePosition(Position);
-        Debug.Log(Position);
 
         //CardBorder = GetComponent<SpriteRenderer>().sprite;
         CardBorder1 = (Sprite)Resources.Load($"Sprites/BountyCards/BountyCardFinalized", typeof(Sprite));
