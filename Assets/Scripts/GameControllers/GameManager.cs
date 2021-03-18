@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public AudioManager audioManager; // Shouldn't be public but is for now !!!
 
 
-    private void Start() {
+    private void Awake() {
         playerManagers = new List<PlayerManager>();
 
         playerList = transform.Find("Players");

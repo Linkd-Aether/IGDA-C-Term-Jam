@@ -80,7 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
   baseColor: {r: 0, g: 0, b: 0, a: 0}
-  spriteOverlay: {fileID: 0}
   isAlive: 1
   isImmune: 0
   isBounty: 0
@@ -427,7 +426,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.735849, g: 0.6071263, b: 0.107600555, a: 1}
+      maxColor: {r: 0.735849, g: 0.6071263, b: 0.107600555, a: 0.5019608}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -940,7 +939,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    m_Texture: {fileID: 2800000, guid: 7bd715b6b4276ba4b82110822f619ea9, type: 3}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
